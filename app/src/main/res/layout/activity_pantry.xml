@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_weight="7"
+    android:background="#FFFFFF"
+    tools:context=".Pantry">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="144dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="40dp"
+                android:textAlignment="center"
+                android:text="Ingredients"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold"/>
+            <ImageButton
+                android:id="@+id/voiceBtn"
+                android:layout_width="55dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="130dp"
+                android:layout_marginTop="35dp"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/mic"/>
+            <ImageButton
+                android:id="@+id/scanBtn"
+                android:layout_width="55dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="35dp"
+                android:background="@null"
+                android:scaleType="fitCenter"
+                android:src="@drawable/scan"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="380dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="4">
+
+        <EditText
+            android:id="@+id/textTv"
+            android:layout_width="320dp"
+            android:layout_height="400dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/input_bg"
+            android:ems="8"
+            android:hint="Type your Ingredients"
+            android:inputType="textPersonName"
+            android:paddingLeft="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/input_bg"
+            android:text="GENERATE"
+            android:textSize="20dp"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:layout_width="72dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="12dp"
+                android:src="@drawable/home"
+                android:scaleType="fitCenter"
+                android:background="@null"/>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="55dp"
+                android:layout_height="14dp"
+                android:layout_marginLeft="25dp"
+                android:layout_weight="1"
+                android:text="Pantry"
+                android:textSize="15dp"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:layout_width="72dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="12dp"
+                android:src="@drawable/add"
+                android:scaleType="fitCenter"
+                android:background="@null"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Upload"
+                android:layout_marginLeft="25dp"
+                android:textSize="15dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:layout_width="72dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="12dp"
+                android:src="@drawable/favorite"
+                android:scaleType="fitCenter"
+                android:background="@null"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Favorites"
+                android:layout_marginLeft="19dp"
+                android:textSize="15dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" android:orientation="vertical">
+
+            <ImageButton
+                android:layout_width="72dp"
+                android:layout_height="55dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="12dp"
+                android:src="@drawable/acc"
+                android:scaleType="fitCenter"
+                android:background="@null"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="User"
+                android:layout_marginLeft="35dp"
+                android:textSize="15dp"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
