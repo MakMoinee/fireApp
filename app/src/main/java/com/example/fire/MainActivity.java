@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fire.LocalPreference.UserPreferences;
+import com.example.fire.Models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -23,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView createNewAccount;
 
-    EditText inputEmail,inputPassword,inputConfirmPassword;
+    EditText inputEmail, inputPassword, inputConfirmPassword;
     Button btnLogin;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     ProgressDialog progressDialog;
@@ -34,23 +36,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Users users = new UserPreferences(MainActivity.this).getUsers();
+        if (users != null) {
+            sendUSerToNextActivity();
+        }
         setContentView(R.layout.activity_main);
-        createNewAccount=findViewById(R.id.createNewAccount);
+        createNewAccount = findViewById(R.id.createNewAccount);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        inputEmail=findViewById(R.id.inputEmail);
-        inputPassword=findViewById(R.id.inputPassword);
-        btnLogin=findViewById(R.id.btnLogin);
-        progressDialog=new ProgressDialog(this);
-        mAuth=FirebaseAuth.getInstance();
-        mUser=mAuth.getCurrentUser();
+        inputEmail = findViewById(R.id.inputEmail);
+        inputPassword = findViewById(R.id.inputPassword);
+        btnLogin = findViewById(R.id.btnLogin);
+        progressDialog = new ProgressDialog(this);
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
 
 
         createNewAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,CreateAccount.class));
+                startActivity(new Intent(MainActivity.this, CreateAccount.class));
             }
         });
 
@@ -65,42 +71,43 @@ public class MainActivity extends AppCompatActivity {
 
     private void performLogIn() {
 
-        String email=inputEmail.getText().toString();
-        String password=inputPassword.getText().toString();
+        String email = inputEmail.getText().toString();
+        String password = inputPassword.getText().toString();
 
-        if(!email.matches(emailPattern))
-        {
+        if (!email.matches(emailPattern)) {
             inputEmail.setError("Enter Correct Email");
-        }else if(password.isEmpty() || password.length()<10)
-        {
+        } else if (password.isEmpty() || password.length() < 10) {
             inputPassword.setError("Enter Proper Password");
-        }else {
+        } else {
             progressDialog.setMessage("Please Wait While Login....");
             progressDialog.setTitle("Login");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
 
-            mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful())
-                    {
+                    if (task.isSuccessful()) {
                         progressDialog.dismiss();
+                        Users users = new Users();
+                        users.setEmail(email);
+                        users.setPassword(password);
+                        new UserPreferences(MainActivity.this).saveLogin(users);
                         sendUSerToNextActivity();
                         Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    }else
-                    {
+                    } else {
                         progressDialog.dismiss();
-                        Toast.makeText(MainActivity.this, ""+task.getException(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
         }
 
-        }
+    }
+
     private void sendUSerToNextActivity() {
-        Intent intent=new Intent(MainActivity.this,Pantry.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent intent = new Intent(MainActivity.this, Pantry.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 }

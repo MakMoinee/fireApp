@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_weight="7"
     android:background="#FFFFFF"
+    android:orientation="vertical"
     tools:context=".Pantry">
 
     <LinearLayout
@@ -26,11 +25,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="40dp"
-                android:textAlignment="center"
                 android:text="Ingredients"
+                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="25dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <ImageButton
                 android:id="@+id/voiceBtn"
                 android:layout_width="55dp"
@@ -39,7 +39,8 @@
                 android:layout_marginTop="35dp"
                 android:background="@null"
                 android:scaleType="fitCenter"
-                android:src="@drawable/mic"/>
+                android:src="@drawable/mic" />
+
             <ImageButton
                 android:id="@+id/scanBtn"
                 android:layout_width="55dp"
@@ -48,46 +49,55 @@
                 android:layout_marginTop="35dp"
                 android:background="@null"
                 android:scaleType="fitCenter"
-                android:src="@drawable/scan"/>
+                android:src="@drawable/scan" />
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="380dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:layout_weight="4">
+        android:layout_weight="4"
+        android:paddingLeft="10dp">
 
-        <EditText
-            android:id="@+id/textTv"
-            android:layout_width="320dp"
-            android:layout_height="400dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@drawable/input_bg"
-            android:ems="8"
-            android:hint="Type your Ingredients"
-            android:inputType="textPersonName"
-            android:paddingLeft="10dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/textTv"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/input_bg"
+                android:ems="8"
+                android:hint="Type your Ingredients"
+                android:inputType="textPersonName"
+                android:paddingLeft="10dp"
+                android:paddingBottom="10dp" />
+        </RelativeLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/relGenerate"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
 
         <Button
+            android:id="@+id/btnGenerate"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:background="@drawable/input_bg"
+            android:clickable="true"
             android:text="GENERATE"
-            android:textSize="20dp"
-            android:textColor="@color/black"/>
-    </LinearLayout>
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -105,11 +115,11 @@
             <ImageButton
                 android:layout_width="72dp"
                 android:layout_height="55dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="12dp"
-                android:src="@drawable/home"
+                android:layout_marginTop="5dp"
+                android:background="@null"
                 android:scaleType="fitCenter"
-                android:background="@null"/>
+                android:src="@drawable/home" />
 
             <TextView
                 android:id="@+id/textView"
@@ -118,8 +128,8 @@
                 android:layout_marginLeft="25dp"
                 android:layout_weight="1"
                 android:text="Pantry"
-                android:textSize="15dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="15dp" />
 
         </LinearLayout>
 
@@ -132,20 +142,20 @@
             <ImageButton
                 android:layout_width="72dp"
                 android:layout_height="55dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="12dp"
-                android:src="@drawable/add"
+                android:layout_marginTop="5dp"
+                android:background="@null"
                 android:scaleType="fitCenter"
-                android:background="@null"/>
+                android:src="@drawable/add" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
                 android:layout_weight="1"
                 android:text="Upload"
-                android:layout_marginLeft="25dp"
-                android:textSize="15dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="15dp" />
         </LinearLayout>
 
 
@@ -158,44 +168,47 @@
             <ImageButton
                 android:layout_width="72dp"
                 android:layout_height="55dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="12dp"
-                android:src="@drawable/favorite"
+                android:layout_marginTop="5dp"
+                android:background="@null"
                 android:scaleType="fitCenter"
-                android:background="@null"/>
+                android:src="@drawable/favorite" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
                 android:layout_weight="1"
                 android:text="Favorites"
-                android:layout_marginLeft="19dp"
-                android:textSize="15dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="15dp" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearUser"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" android:orientation="vertical">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <ImageButton
+                android:id="@+id/imgUser"
                 android:layout_width="72dp"
                 android:layout_height="55dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="12dp"
-                android:src="@drawable/acc"
+                android:layout_marginTop="5dp"
+                android:background="@null"
                 android:scaleType="fitCenter"
-                android:background="@null"/>
+                android:src="@drawable/acc" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
                 android:layout_weight="1"
                 android:text="User"
-                android:layout_marginLeft="35dp"
-                android:textSize="15dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="15dp" />
 
         </LinearLayout>
 
