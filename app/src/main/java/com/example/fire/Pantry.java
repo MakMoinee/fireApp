@@ -1,5 +1,6 @@
 package com.example.fire;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,13 +17,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.fire.Interfaces.LocalFirestoreCallback;
 import com.example.fire.LocalPreference.UserPreferences;
+import com.example.fire.Models.Dishes;
 import com.example.fire.Models.Users;
+import com.example.fire.Service.LocalFireStore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 public class Pantry extends AppCompatActivity {
 
@@ -34,6 +40,9 @@ public class Pantry extends AppCompatActivity {
     private AlertDialog linearUserDialog;
     private ImageButton imgUser;
     String[] siteInfo;
+    LocalFireStore db;
+    ProgressDialog pdLoading;
+    boolean cancelled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,14 +82,81 @@ public class Pantry extends AppCompatActivity {
                 if (mTextTv.getText().toString().equals("")) {
                     Toast.makeText(Pantry.this, "Please Don't Leave Empty Fields", Toast.LENGTH_SHORT).show();
                 } else {
-                    Log.e("INFOS", mTextTv.getText().toString());
-                    List<String> infoList = Arrays.asList(siteInfo);
-                    if (infoList.indexOf(mTextTv.getText().toString()) > 0) {
-                        int index = Arrays.asList(siteInfo).indexOf(mTextTv.getText().toString());
-                        Log.e("INDEXX", Integer.toString(index));
-                    } else {
-                        Log.e("INFOS", siteInfo.toString());
-                    }
+                    pdLoading.show();
+                    String searchKey = mTextTv.getText().toString();
+                    String[] searchArr = searchKey.split(",");
+                    db.searchIngredient(searchKey, new LocalFirestoreCallback() {
+                        @Override
+                        public void onSuccess(List<Dishes> dishList) {
+                            Dishes filterDish = new Dishes();
+                            int validCount = 0;
+                            if (dishList != null) {
+                                for (Dishes d : dishList) {
+                                    validCount = new Integer(0);
+                                    Set<String> newSet = new HashSet<>(d.getIngredients());
+                                    for (int j = 0; j < newSet.toArray().length; j++) {
+                                        String str = newSet.toArray()[j].toString();
+                                        for (int i = 0; i < searchArr.length; i++) {
+                                            String str2 = searchArr[i].toString();
+                                            if (str2.equals(str)) {
+                                                validCount++;
+                                            }
+                                            if (Integer.toString(validCount).equals(Integer.toString(searchArr.length))) {
+                                                break;
+                                            }
+
+                                        }
+                                        if (Integer.toString(validCount).equals(Integer.toString(searchArr.length))) {
+                                            break;
+                                        }
+                                    }
+
+                                    if (Integer.toString(validCount).equals(Integer.toString(searchArr.length))) {
+                                        filterDish = d;
+                                        break;
+                                    }
+                                }
+
+                            }
+                            pdLoading.hide();
+                            if (validCount == searchArr.length) {
+                                Intent intent = new Intent(Pantry.this, DishActivity.class);
+                                intent.putExtra("title", filterDish.getDish());
+                                intent.putExtra("videoURL", filterDish.getVideoURL());
+                                intent.putExtra("instructions", String.join("\n", filterDish.getInstructions()));
+                                intent.putExtra("ingredients", String.join("\n", filterDish.getOrigIngredients()));
+                                if (filterDish.getDescription().size() > 0) {
+                                    intent.putExtra("description", String.join("\n", filterDish.getDescription()));
+                                } else {
+                                    intent.putExtra("description", "");
+                                }
+
+
+                                startActivity(intent);
+                                mTextTv.setText("");
+                            } else {
+                                Toast.makeText(Pantry.this, "Ingredient Not Found", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+//                    List<String> infoList = Arrays.asList(siteInfo);
+//                    Log.e("INFOS", Integer.toString(infoList.size()));
+//                    if (infoList.indexOf(mTextTv.getText().toString()) > 0) {
+//                        int index = Arrays.asList(siteInfo).indexOf(mTextTv.getText().toString());
+//                        Intent intent = new Intent(Pantry.this, DishActivity.class);
+//                        intent.putExtra("title", infoList.get(index));
+//                        startActivity(intent);
+//                        mTextTv.setText("");
+//                    } else {
+//                        List<String> choices = Common.getMap(infoList, mTextTv.getText().toString());
+//                        Log.e("INFOS", choices.toString());
+//                    }
                 }
             }
         });
@@ -96,9 +172,11 @@ public class Pantry extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case DialogInterface.BUTTON_NEGATIVE:
+                                linearUserDialog.dismiss();
                                 new UserPreferences(Pantry.this).saveLogin(new Users());
                                 startActivity(new Intent(Pantry.this, MainActivity.class));
                                 finish();
+
                                 break;
                             default:
                                 dialog.cancel();
@@ -124,6 +202,9 @@ public class Pantry extends AppCompatActivity {
         btnGenerate = findViewById(R.id.btnGenerate);
         imgUser = findViewById(R.id.imgUser);
         siteInfo = getResources().getStringArray(R.array.siteInfo);
+        db = new LocalFireStore(Pantry.this);
+        pdLoading = new ProgressDialog(Pantry.this);
+        pdLoading.setMessage("Sending Request ...");
     }
 
     private void speak() {
