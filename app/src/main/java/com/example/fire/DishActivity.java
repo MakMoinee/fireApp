@@ -22,6 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.fire.Common.Common;
 import com.example.fire.Common.Constants;
+import com.example.fire.Models.Dishes;
 import com.example.fire.Models.LocalFormats;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
@@ -112,6 +113,7 @@ public class DishActivity extends AppCompatActivity {
 
         txtIngredients.setText(ingredients);
         txtInstructions.setText(instructions);
+
 
         toolbar.setTitle(newTitle);
         loadPureURL();

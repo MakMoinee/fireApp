@@ -12,6 +12,4 @@ public class Dishes {
     List<String> instructions;
     List<String> origIngredients;
     String videoURL;
-
-
 }

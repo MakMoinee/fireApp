@@ -1,5 +1,7 @@
 package com.example.fire.Common;
 
+import com.example.fire.Models.Dishes;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +53,19 @@ public class Common {
         contextMap.put("client", clientMap);
         map.put("context", contextMap);
         map.put("videoId", watchID);
+        return map;
+    }
+
+    public static Map<String, Object> convertDishToMap(Dishes dishes) {
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("description", dishes.getDescription());
+        map.put("dish",dishes.getDish());
+        map.put("ingredients", dishes.getIngredients());
+        map.put("instructions", dishes.getInstructions());
+        map.put("origIngredients", dishes.getOrigIngredients());
+        map.put("videoURL", dishes.getVideoURL());
+
         return map;
     }
 }

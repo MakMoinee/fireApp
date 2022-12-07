@@ -11,6 +11,12 @@ public interface LocalFirestoreCallback {
          */
     }
 
+    default void onSuccess(){
+        /**
+         * default implementation
+         */
+    }
+
 
     void onError(Exception e);
 }

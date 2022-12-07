@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.fire.Common.Common;
 import com.example.fire.Interfaces.LocalFirestoreCallback;
 import com.example.fire.Models.Dishes;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -16,7 +17,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LocalFireStore {
     Context mContext;
@@ -78,6 +81,29 @@ public class LocalFireStore {
             callback.onError(e);
         }
 
+    }
+
+    public void addIngredient(Dishes dishes, LocalFirestoreCallback callback) {
+        try {
+            Map<String,Object> map = Common.convertDishToMap(dishes);
+            db.collection("dishes")
+                    .document()
+                    .set(map)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            callback.onSuccess();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            callback.onError(e);
+                        }
+                    });
+        } catch (Exception e) {
+            callback.onError(e);
+        }
     }
 
 }
