@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView createNewAccount;
+    TextView createNewAccount, forgotPassword;
 
     EditText inputEmail, inputPassword, inputConfirmPassword;
     Button btnLogin;
@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         inputEmail = findViewById(R.id.inputEmail);
         inputPassword = findViewById(R.id.inputPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        forgotPassword = findViewById(R.id.forgotPassword);
         progressDialog = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -57,6 +58,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, CreateAccount.class));
+            }
+        });
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ForgotPassword.class));
             }
         });
 
@@ -90,8 +98,6 @@ public class MainActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         progressDialog.dismiss();
                         Users users = new Users();
-                        users.setEmail(email);
-                        users.setPassword(password);
                         new UserPreferences(MainActivity.this).saveLogin(users);
                         sendUSerToNextActivity();
                         Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();

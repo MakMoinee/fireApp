@@ -35,21 +35,12 @@
                 android:id="@+id/voiceBtn"
                 android:layout_width="55dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="130dp"
+                android:layout_marginLeft="170dp"
                 android:layout_marginTop="35dp"
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:src="@drawable/mic" />
 
-            <ImageButton
-                android:id="@+id/scanBtn"
-                android:layout_width="55dp"
-                android:layout_height="35dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="35dp"
-                android:background="@null"
-                android:scaleType="fitCenter"
-                android:src="@drawable/scan" />
         </LinearLayout>
 
     </LinearLayout>
@@ -57,7 +48,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:layout_weight="4"
         android:paddingLeft="10dp">
 
@@ -68,15 +59,16 @@
             <EditText
                 android:id="@+id/textTv"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="300dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/input_bg"
                 android:ems="8"
                 android:hint="Type your Ingredients"
-                android:inputType="textPersonName"
+                android:inputType="textMultiLine"
                 android:paddingLeft="10dp"
-                android:paddingBottom="10dp" />
+                android:gravity="start"
+                android:paddingTop="10dp"/>
         </RelativeLayout>
     </LinearLayout>
 
@@ -91,7 +83,6 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
             android:background="@drawable/input_bg"
             android:clickable="true"
             android:text="GENERATE"
@@ -192,7 +183,7 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/imgUser"
+                android:id="@+id/btnUser"
                 android:layout_width="72dp"
                 android:layout_height="55dp"
                 android:layout_marginLeft="12dp"

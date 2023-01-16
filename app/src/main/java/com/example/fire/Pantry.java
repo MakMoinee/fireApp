@@ -34,11 +34,10 @@ public class Pantry extends AppCompatActivity {
 
     private static final int REQUEST_CODE_SPEECH_INPUT = 1000;
     EditText mTextTv;
-    ImageButton mVoiceBtn;
+    ImageButton mVoiceBtn, btnUser;
     private Button btnLogout, btnGenerate;
     private RelativeLayout relGenerate;
     private AlertDialog linearUserDialog;
-    private ImageButton imgUser;
     String[] siteInfo;
     LocalFireStore db;
     ProgressDialog pdLoading;
@@ -50,8 +49,6 @@ public class Pantry extends AppCompatActivity {
         setContentView(R.layout.activity_pantry);
         initViews();
         initListeners();
-
-
     }
 
     private void initListeners() {
@@ -63,18 +60,13 @@ public class Pantry extends AppCompatActivity {
             }
         });
 
-        imgUser.setOnClickListener(new View.OnClickListener() {
+        btnUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(Pantry.this);
-                View mView = getLayoutInflater().inflate(R.layout.dialog_user, null, false);
-                mBuilder.setView(mView);
-                initDialogView(mView);
-                initDialogListeners();
-                linearUserDialog = mBuilder.create();
-                linearUserDialog.show();
+                startActivity(new Intent(Pantry.this,User.class));
             }
         });
+
 
         btnGenerate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,35 +154,7 @@ public class Pantry extends AppCompatActivity {
         });
     }
 
-    private void initDialogListeners() {
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder lBuilder = new AlertDialog.Builder(Pantry.this);
-                DialogInterface.OnClickListener dListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                linearUserDialog.dismiss();
-                                new UserPreferences(Pantry.this).saveLogin(new Users());
-                                startActivity(new Intent(Pantry.this, MainActivity.class));
-                                finish();
 
-                                break;
-                            default:
-                                dialog.cancel();
-                        }
-                    }
-                };
-                lBuilder.setMessage("Are You Sure You Want To Logout?")
-                        .setNegativeButton("Yes", dListener)
-                        .setPositiveButton("No", dListener)
-                        .show();
-            }
-        });
-
-    }
 
     private void initDialogView(View mView) {
         btnLogout = mView.findViewById(R.id.btnLogout);
@@ -200,7 +164,7 @@ public class Pantry extends AppCompatActivity {
         mTextTv = findViewById(R.id.textTv);
         mVoiceBtn = findViewById(R.id.voiceBtn);
         btnGenerate = findViewById(R.id.btnGenerate);
-        imgUser = findViewById(R.id.imgUser);
+        btnUser = findViewById(R.id.btnUser);
         siteInfo = getResources().getStringArray(R.array.siteInfo);
         db = new LocalFireStore(Pantry.this);
         pdLoading = new ProgressDialog(Pantry.this);

@@ -19,6 +19,27 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Favorites"
+            android:exported="false" />
+        <activity
+            android:name=".Upload"
+            android:exported="false" />
+        <activity
+            android:name=".ForgotPassword"
+            android:exported="false" />
+        <activity
+            android:name=".Security"
+            android:exported="false" />
+        <activity
+            android:name=".Language"
+            android:exported="false" />
+        <activity
+            android:name=".PersonalInformation"
+            android:exported="false" />
+        <activity
+            android:name=".User"
+            android:exported="false" />
+        <activity
             android:name=".Pantry"
             android:exported="false" />
         <activity
