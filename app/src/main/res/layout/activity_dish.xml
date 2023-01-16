@@ -23,10 +23,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:menu="@menu/dish_menu"
                 app:navigationIcon="@drawable/ic_close"
                 app:title="Dish"
-                app:titleTextColor="@color/black">
-            </androidx.appcompat.widget.Toolbar>
+                app:titleTextColor="@color/black"></androidx.appcompat.widget.Toolbar>
 
             <TextView
                 android:id="@+id/lblDescription"

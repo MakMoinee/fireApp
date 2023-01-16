@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -38,7 +39,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Users users = new UserPreferences(MainActivity.this).getUsers();
         if (users != null) {
-            sendUSerToNextActivity();
+            if (users.getEmail() != "") {
+                Log.e("users", users.toString());
+                sendUSerToNextActivity();
+            }
+
         }
         setContentView(R.layout.activity_main);
         createNewAccount = findViewById(R.id.createNewAccount);
@@ -98,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         progressDialog.dismiss();
                         Users users = new Users();
+                        users.setPassword(inputPassword.getText().toString());
+                        users.setEmail(inputEmail.getText().toString());
                         new UserPreferences(MainActivity.this).saveLogin(users);
                         sendUSerToNextActivity();
                         Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();

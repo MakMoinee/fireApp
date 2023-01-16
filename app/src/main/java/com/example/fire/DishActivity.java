@@ -3,12 +3,14 @@ package com.example.fire;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -22,6 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.fire.Common.Common;
 import com.example.fire.Common.Constants;
+import com.example.fire.LocalPreference.FavoritesPref;
 import com.example.fire.Models.Dishes;
 import com.example.fire.Models.LocalFormats;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -51,6 +54,7 @@ public class DishActivity extends AppCompatActivity {
     private SurfaceView surfaceView;
     private ProgressBar pbLoading;
     private ImageButton playButton;
+    private Dishes fDish;
 
 
     @Override
@@ -66,6 +70,18 @@ public class DishActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_favor:
+                        new FavoritesPref(DishActivity.this).storeDish(fDish);
+                        Toast.makeText(DishActivity.this, "Successfully Added To Favorites", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                return false;
             }
         });
         playButton.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +115,10 @@ public class DishActivity extends AppCompatActivity {
         description = getIntent().getStringExtra("description");
         ingredients = getIntent().getStringExtra("ingredients");
         instructions = getIntent().getStringExtra("instructions");
+        String rawDish = getIntent().getStringExtra("dishRaw");
+        fDish = new Gson().fromJson(rawDish, new TypeToken<Dishes>() {
+        }.getType());
+
         if (title != "") {
             origTitle = title;
             newTitle = title.replace("-", " ");

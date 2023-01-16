@@ -1,5 +1,6 @@
 package com.example.fire;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import com.example.fire.LocalPreference.UserPreferences;
 import com.example.fire.Models.Dishes;
 import com.example.fire.Models.Users;
 import com.example.fire.Service.LocalFireStore;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,7 +36,7 @@ public class Pantry extends AppCompatActivity {
 
     private static final int REQUEST_CODE_SPEECH_INPUT = 1000;
     EditText mTextTv;
-    ImageButton mVoiceBtn, btnUser;
+    ImageButton mVoiceBtn, btnUser, btnFavorites;
     private Button btnLogout, btnGenerate;
     private RelativeLayout relGenerate;
     private AlertDialog linearUserDialog;
@@ -52,6 +54,13 @@ public class Pantry extends AppCompatActivity {
     }
 
     private void initListeners() {
+        btnFavorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Pantry.this, Favorites.class);
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(Pantry.this).toBundle());
+            }
+        });
         mVoiceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +72,7 @@ public class Pantry extends AppCompatActivity {
         btnUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Pantry.this,User.class));
+                startActivity(new Intent(Pantry.this, User.class));
             }
         });
 
@@ -113,6 +122,7 @@ public class Pantry extends AppCompatActivity {
                             pdLoading.hide();
                             if (validCount == searchArr.length) {
                                 Intent intent = new Intent(Pantry.this, DishActivity.class);
+                                intent.putExtra("dishRaw", new Gson().toJson(filterDish));
                                 intent.putExtra("title", filterDish.getDish());
                                 intent.putExtra("videoURL", filterDish.getVideoURL());
                                 intent.putExtra("instructions", String.join("\n", filterDish.getInstructions()));
@@ -155,7 +165,6 @@ public class Pantry extends AppCompatActivity {
     }
 
 
-
     private void initDialogView(View mView) {
         btnLogout = mView.findViewById(R.id.btnLogout);
     }
@@ -169,6 +178,7 @@ public class Pantry extends AppCompatActivity {
         db = new LocalFireStore(Pantry.this);
         pdLoading = new ProgressDialog(Pantry.this);
         pdLoading.setMessage("Sending Request ...");
+        btnFavorites = findViewById(R.id.btnFavorites);
     }
 
     private void speak() {
@@ -197,6 +207,15 @@ public class Pantry extends AppCompatActivity {
                 }
                 break;
             }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Users users = new UserPreferences(Pantry.this).getUsers();
+        if (users == null) {
+            finish();
         }
     }
 }
