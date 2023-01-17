@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Change Password"
+        android:text="Palitan Ang Password"
         android:textColor="@color/black"
         android:textSize="18dp"
         android:textStyle="bold"
@@ -40,7 +40,7 @@
             android:id="@+id/cPasswordEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Current Password"
+            android:hint="Kasalukuyang Password"
             android:inputType="textPassword"
             tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -58,7 +58,7 @@
             android:id="@+id/nPasswordEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="New Password"
+            android:hint="Bagong Password"
             android:inputType="textPassword"
             tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -67,7 +67,7 @@
         android:id="@+id/changePassBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Change Password"
+        android:text="Palitan Ang Password"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/input_bg"

@@ -11,8 +11,10 @@
         android:scrollbars="vertical">
 
         <RelativeLayout
+            android:id="@+id/relDish"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="invisible">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -26,6 +28,7 @@
                 app:menu="@menu/dish_menu"
                 app:navigationIcon="@drawable/ic_close"
                 app:title="Dish"
+                app:titleTextAppearance="@style/CallunaTextAppearance"
                 app:titleTextColor="@color/black"></androidx.appcompat.widget.Toolbar>
 
             <TextView
@@ -36,7 +39,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="DESCRIPTION"
+                android:text="PAGLALARAWAN"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -61,7 +64,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="INGREDIENTS"
+                android:text="MGA SANGKAP"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -86,7 +89,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="INSTRUCTIONS"
+                android:text="MGA TAGUBILIN"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />

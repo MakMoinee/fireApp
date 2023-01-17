@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,11 +20,13 @@
             android:layout_weight="1">
 
             <TextView
-                android:layout_width="144dp"
+                android:id="@+id/lblIngredients"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="40dp"
-                android:text="Ingredients"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
+                android:text="Mga Sangkap"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="25dp"
@@ -35,7 +36,7 @@
                 android:id="@+id/voiceBtn"
                 android:layout_width="55dp"
                 android:layout_height="35dp"
-                android:layout_marginLeft="170dp"
+                android:layout_marginLeft="150dp"
                 android:layout_marginTop="35dp"
                 android:background="@null"
                 android:scaleType="fitCenter"
@@ -48,7 +49,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:layout_weight="4"
         android:paddingLeft="10dp">
 
@@ -64,11 +65,11 @@
                 android:layout_weight="1"
                 android:background="@drawable/input_bg"
                 android:ems="8"
-                android:hint="Type your Ingredients"
+                android:gravity="start"
+                android:hint="I-type ang iyong mga sangkap"
                 android:inputType="textMultiLine"
                 android:paddingLeft="10dp"
-                android:gravity="start"
-                android:paddingTop="10dp"/>
+                android:paddingTop="10dp" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -85,7 +86,7 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/input_bg"
             android:clickable="true"
-            android:text="GENERATE"
+            android:text="bumuo"
             android:textColor="@color/black"
             android:textSize="20dp" />
     </RelativeLayout>
@@ -104,21 +105,23 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:layout_width="72dp"
-                android:layout_height="55dp"
-                android:layout_marginLeft="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="5dp"
+                android:layout_weight="1"
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:src="@drawable/home" />
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="55dp"
-                android:layout_height="14dp"
-                android:layout_marginLeft="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="Pantry"
+                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="15dp" />
 
@@ -131,20 +134,23 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:layout_width="72dp"
-                android:layout_height="55dp"
-                android:layout_marginLeft="12dp"
+                android:id="@+id/btnUpload"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="5dp"
+                android:layout_weight="1"
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:src="@drawable/add" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="Upload"
+                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="15dp" />
         </LinearLayout>
@@ -158,20 +164,22 @@
 
             <ImageButton
                 android:id="@+id/btnFavorites"
-                android:layout_width="72dp"
-                android:layout_height="55dp"
-                android:layout_marginLeft="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="5dp"
+                android:layout_weight="1"
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:src="@drawable/favorite" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="19dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="Favorites"
+                android:text="Mga Paborito"
+                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="15dp" />
         </LinearLayout>
@@ -185,20 +193,22 @@
 
             <ImageButton
                 android:id="@+id/btnUser"
-                android:layout_width="72dp"
-                android:layout_height="55dp"
-                android:layout_marginLeft="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
                 android:layout_marginTop="5dp"
+                android:layout_weight="1"
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:src="@drawable/acc" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:text="User"
+                android:text="Gumagamit"
+                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="15dp" />
 

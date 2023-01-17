@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             app:navigationIcon="@drawable/ic_back"
-            app:title="Favorites"
+            app:title="Mga Paborito"
             app:titleTextColor="@color/black" />
 
         <TextView
@@ -28,7 +28,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/calluna_regular"
-            android:text="There are no favorites"
+            android:text="Walang Kasalukuyang Lista Ng Paborito"
             android:textColor="@android:color/black"
             android:textSize="15sp" />
 
