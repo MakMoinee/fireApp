@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.fire">
+    package="com.expert.fire">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -19,13 +22,36 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".Pantry"
+            android:name="com.expert.fire.Favorites"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
+        <activity
+            android:name="com.expert.fire.Upload"
             android:exported="false" />
         <activity
-            android:name=".CreateAccount"
+            android:name="com.expert.fire.ForgotPassword"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.expert.fire.Security"
+            android:exported="false" />
+        <activity
+            android:name="com.expert.fire.Language"
+            android:exported="false"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
+        <activity
+            android:name="com.expert.fire.PersonalInformation"
+            android:exported="false" />
+        <activity
+            android:name="com.expert.fire.User"
+            android:exported="false" />
+        <activity
+            android:name="com.expert.fire.Pantry"
+            android:exported="false" />
+        <activity
+            android:name="com.expert.fire.CreateAccount"
+            android:exported="false" />
+        <activity
+            android:name="com.expert.fire.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +60,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DishActivity"
+            android:name="com.expert.fire.DishActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
     </application>

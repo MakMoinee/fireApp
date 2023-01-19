@@ -2,8 +2,8 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -11,21 +11,25 @@
         android:scrollbars="vertical">
 
         <RelativeLayout
+            android:id="@+id/relDish"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="invisible">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/teal_700"
+                android:background="#FFFFFF"
                 android:clickable="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:menu="@menu/dish_menu"
                 app:navigationIcon="@drawable/ic_close"
                 app:title="Dish"
-                app:titleTextColor="@color/white"></androidx.appcompat.widget.Toolbar>
+                app:titleTextAppearance="@style/CallunaTextAppearance"
+                app:titleTextColor="@color/black"></androidx.appcompat.widget.Toolbar>
 
             <TextView
                 android:id="@+id/lblDescription"
@@ -35,7 +39,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Description"
+                android:text="PAGLALARAWAN"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -60,7 +64,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Ingredients"
+                android:text="MGA SANGKAP"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -85,7 +89,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Instructions"
+                android:text="MGA TAGUBILIN"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -110,7 +114,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/roboto_regular"
-                android:text="Video"
+                android:text="VIDEO"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
