@@ -97,7 +97,7 @@ public class FavoritesAdapter extends BaseAdapter {
                         }
                     }
                 };
-                mBuilder.setMessage("Are You Sure You Want To Remove This Dish In Your Favorites?")
+                mBuilder.setMessage("Sigurado Ka bang Gusto Mong Tanggalin ang Ulam na Ito Sa Mga Paborito Mo?")
                         .setNegativeButton("Yes", dListener)
                         .setPositiveButton("No", dListener)
                         .setCancelable(false)

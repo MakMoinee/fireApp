@@ -85,7 +85,7 @@ public class DishActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.menu_favor:
                         new FavoritesPref(DishActivity.this).storeDish(fDish);
-                        Toast.makeText(DishActivity.this, "Successfully Added To Favorites", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DishActivity.this, "Matagumpay na Nadagdag sa Mga Paborito", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;

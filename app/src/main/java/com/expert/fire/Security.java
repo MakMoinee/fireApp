@@ -41,7 +41,7 @@ public class Security extends AppCompatActivity {
         auth = new LocalFireAuth(new SimpleListener() {
             @Override
             public void onSuccess() {
-                Toast.makeText(Security.this, "Successfully Updated Password, Automatically Logging Out ...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Security.this, "Matagumpay na Na-update ang Password, Awtomatikong Nagla-log Out ...", Toast.LENGTH_SHORT).show();
                 new UserPreferences(Security.this).saveLogin(new Users());
                 new UserPreferences(Security.this).clearUsers();
                 startActivity(new Intent(Security.this, MainActivity.class));
@@ -51,7 +51,7 @@ public class Security extends AppCompatActivity {
 
             @Override
             public void onFail() {
-                Toast.makeText(Security.this, "Failed To Update Password, Try Again Later.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Security.this, "Nabigong I-update ang Password, Subukang Muli Mamaya.", Toast.LENGTH_SHORT).show();
             }
         });
         oldPass = findViewById(R.id.cPasswordEt);

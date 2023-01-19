@@ -58,7 +58,7 @@ public class User extends AppCompatActivity {
                         }
                     }
                 };
-                lBuilder.setMessage("Are You Sure You Want To Logout?")
+                lBuilder.setMessage("Sigurado Ka bang Gusto Mong Mag-logout?")
                         .setNegativeButton("Yes", dListener)
                         .setPositiveButton("No", dListener)
                         .show();
@@ -120,7 +120,7 @@ public class User extends AppCompatActivity {
                         }
                     }
                 };
-                lBuilder.setMessage("Are You Sure You Want To Logout?")
+                lBuilder.setMessage("Sigurado Ka bang Gusto Mong Mag-logout?")
                         .setNegativeButton("Yes", dListener)
                         .setPositiveButton("No", dListener)
                         .show();

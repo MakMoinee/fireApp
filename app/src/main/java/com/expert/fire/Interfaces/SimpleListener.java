@@ -16,7 +16,7 @@ public interface SimpleListener {
          */
     }
 
-    default void onSuccess(String response){
+    default void onSuccess(String response) {
         /***
          * Default implementation
          */
@@ -29,6 +29,12 @@ public interface SimpleListener {
     }
 
     default void onError(VolleyError error) {
+        /***
+         *  Default implementation
+         */
+    }
+
+    default void onError(Exception error) {
         /***
          *  Default implementation
          */

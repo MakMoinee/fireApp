@@ -89,11 +89,11 @@ public class MainActivity extends AppCompatActivity {
         String password = inputPassword.getText().toString();
 
         if (!email.matches(emailPattern)) {
-            inputEmail.setError("Enter Correct Email");
+            inputEmail.setError("Ipasok ang Tamang Email");
         } else if (password.isEmpty() || password.length() < 10) {
-            inputPassword.setError("Enter Proper Password");
+            inputPassword.setError("Ipasok ang Wastong Password");
         } else {
-            progressDialog.setMessage("Please Wait While Login....");
+            progressDialog.setMessage("Mangyaring Maghintay Habang Nag-log in....");
             progressDialog.setTitle("Login");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();

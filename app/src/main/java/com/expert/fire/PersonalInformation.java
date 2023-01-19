@@ -63,7 +63,7 @@ public class PersonalInformation extends AppCompatActivity {
                                 public void onSuccess(PersonalInfo infos) {
                                     dialog.dismiss();
                                     new PersonalInfoPref(PersonalInformation.this).storeInfo(infos);
-                                    Toast.makeText(PersonalInformation.this, "Successfully Updated Personal Info", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(PersonalInformation.this, "Matagumpay na Na-update ang Personal na Impormasyon", Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
 
@@ -71,7 +71,7 @@ public class PersonalInformation extends AppCompatActivity {
                                 public void onError(Exception e) {
                                     dialog.dismiss();
                                     Log.e("ERROR_ADDING_PERSONAL_INFO", e.getMessage());
-                                    Toast.makeText(PersonalInformation.this, "Failed to add personal info, Please Try Again Later", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(PersonalInformation.this, "Nabigong magdagdag ng personal na impormasyon, Pakisubukang Muli Mamaya", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -81,7 +81,7 @@ public class PersonalInformation extends AppCompatActivity {
                         public void onError(Exception e) {
                             dialog.dismiss();
                             Log.e("ERROR_ADDING_PERSONAL_INFO", e.getMessage());
-                            Toast.makeText(PersonalInformation.this, "Failed to add personal info, Please Try Again Later", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PersonalInformation.this, "Nabigong magdagdag ng personal na impormasyon, Pakisubukang Muli Mamaya", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

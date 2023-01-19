@@ -37,14 +37,15 @@ public class ForgotPassword extends AppCompatActivity {
             forgotPassword();
         });
     }
+
     private Boolean validateEmail() {
         String val = binding.txtEmail.getText().toString();
 
         if (val.isEmpty()) {
-            binding.txtEmail.setError("Field cannot be empty ");
+            binding.txtEmail.setError("Hindi maaaring walang laman ang field na ito ");
             return false;
-        } else if (!val.matches(usernamePattern)){
-            binding.txtEmail.setError("Invalid email address");
+        } else if (!val.matches(usernamePattern)) {
+            binding.txtEmail.setError("maling email address");
             return false;
         } else {
             binding.txtEmail.setError(null);
@@ -53,8 +54,7 @@ public class ForgotPassword extends AppCompatActivity {
     }
 
     private void forgotPassword() {
-        if (!validateEmail())
-        {
+        if (!validateEmail()) {
             return;
         }
 
@@ -64,14 +64,11 @@ public class ForgotPassword extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 dialog.dismiss();
-                if(task.isSuccessful())
-                {
+                if (task.isSuccessful()) {
                     startActivity(new Intent(ForgotPassword.this, com.expert.fire.MainActivity.class));
                     finish();
-                    Toast.makeText(ForgotPassword.this, "Please your Email Address", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(ForgotPassword.this, "Enter Correct Email", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ForgotPassword.this, "Ipasok ang Tamang Email", Toast.LENGTH_SHORT).show();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
