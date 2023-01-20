@@ -22,6 +22,7 @@
         android:textColor="@color/black" />
 
     <ImageView
+        android:id="@+id/imgCircle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

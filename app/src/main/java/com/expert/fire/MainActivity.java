@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.expert.fire.LocalPreference.LanguagePref;
 import com.expert.fire.R;
 
 import com.expert.fire.LocalPreference.UserPreferences;
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 sendUSerToNextActivity();
             }
 
+
         }
         setContentView(R.layout.activity_main);
         createNewAccount = findViewById(R.id.createNewAccount);
@@ -58,7 +61,14 @@ public class MainActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-
+        Boolean isEng = new LanguagePref(MainActivity.this).getIsEng();
+        if (isEng) {
+            btnLogin.setText("Login");
+            inputEmail.setHint("Email");
+            inputPassword.setHint("Password");
+            forgotPassword.setText("Forgot Password?");
+            createNewAccount.setText("Create New Account");
+        }
 
         createNewAccount.setOnClickListener(new View.OnClickListener() {
             @Override

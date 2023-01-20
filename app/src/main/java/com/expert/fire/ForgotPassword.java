@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.expert.fire.databinding.ActivityForgotPasswordBinding;
@@ -17,15 +18,21 @@ import com.google.firebase.auth.FirebaseAuth;
 public class ForgotPassword extends AppCompatActivity {
     ActivityForgotPasswordBinding binding;
     String usernamePattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-
+    TextView lblForgotPass;
     ProgressDialog dialog;
     FirebaseAuth mAuth;
+    Boolean isLangEng = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityForgotPasswordBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        lblForgotPass = findViewById(R.id.lblForgotPass);
+        if (isLangEng) {
+            lblForgotPass.setText("Forgot Password");
+            binding.btnForgotpass.setText("Change Password");
+        }
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -42,10 +49,18 @@ public class ForgotPassword extends AppCompatActivity {
         String val = binding.txtEmail.getText().toString();
 
         if (val.isEmpty()) {
-            binding.txtEmail.setError("Hindi maaaring walang laman ang field na ito ");
+            if (isLangEng) {
+                binding.txtEmail.setError("This field can't be empty");
+            } else {
+                binding.txtEmail.setError("Hindi maaaring walang laman ang field na ito ");
+            }
             return false;
         } else if (!val.matches(usernamePattern)) {
-            binding.txtEmail.setError("maling email address");
+            if (isLangEng) {
+                binding.txtEmail.setError("wrong email address");
+            } else {
+                binding.txtEmail.setError("maling email address");
+            }
             return false;
         } else {
             binding.txtEmail.setError(null);
@@ -68,7 +83,11 @@ public class ForgotPassword extends AppCompatActivity {
                     startActivity(new Intent(ForgotPassword.this, com.expert.fire.MainActivity.class));
                     finish();
                 } else {
-                    Toast.makeText(ForgotPassword.this, "Ipasok ang Tamang Email", Toast.LENGTH_SHORT).show();
+                    if (isLangEng) {
+                        Toast.makeText(ForgotPassword.this, "Enter Correct Email", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(ForgotPassword.this, "Ipasok ang Tamang Email", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

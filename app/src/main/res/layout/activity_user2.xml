@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#FFFFFF"
+    android:orientation="vertical"
     tools:context=".User">
 
     <RelativeLayout
@@ -45,18 +45,18 @@
                 android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:src="@drawable/profile"/>
+                android:src="@drawable/profile" />
 
         </LinearLayout>
     </ScrollView>
 
     <LinearLayout
-        android:background="@drawable/input_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/input_bg"
         android:orientation="vertical"
         android:padding="15dp">
 
@@ -72,6 +72,7 @@
                 android:src="@drawable/ferson" />
 
             <TextView
+                android:id="@+id/lblPersonalInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -89,11 +90,13 @@
                 android:layout_centerVertical="true"
                 android:background="@null"
                 android:src="@drawable/right"
+                android:visibility="gone"
                 tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/relLang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -104,6 +107,7 @@
                 android:src="@drawable/language" />
 
             <TextView
+                android:id="@+id/lblLanguage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -121,6 +125,7 @@
                 android:layout_centerVertical="true"
                 android:background="@null"
                 android:src="@drawable/right"
+                android:visibility="gone"
                 tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
         </RelativeLayout>
@@ -137,6 +142,7 @@
                 android:src="@drawable/security" />
 
             <TextView
+                android:id="@+id/lblSecurity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -154,6 +160,7 @@
                 android:layout_centerVertical="true"
                 android:background="@null"
                 android:src="@drawable/right"
+                android:visibility="gone"
                 tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
         </RelativeLayout>
@@ -164,12 +171,12 @@
         android:id="@+id/btnLogout"
         android:layout_width="270dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:background="@drawable/input_bg"
         android:paddingLeft="10dp"
         android:text="Log Out"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        android:layout_gravity="center"/>
+        android:textSize="20sp" />
 
 </LinearLayout>

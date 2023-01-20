@@ -13,6 +13,7 @@
     tools:context=".PersonalInformation">
 
     <TextView
+        android:id="@+id/lblPersonalInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Personal na Impormasyon"
@@ -28,6 +29,7 @@
         android:padding="20dp">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -44,6 +46,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -60,6 +63,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.expert.fire.LocalPreference.LanguagePref;
 import com.expert.fire.LocalPreference.UserPreferences;
 import com.expert.fire.Models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,12 +31,14 @@ public class CreateAccount extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     FirebaseUser mUser;
+    Boolean isLangEng = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
         alreadyHaveAccount = findViewById(R.id.alreadyHaveAccount);
+        isLangEng = new LanguagePref(CreateAccount.this).getIsEng();
 
         inputEmail = findViewById(R.id.inputEmail);
         inputPassword = findViewById(R.id.inputPassword);
@@ -44,7 +47,10 @@ public class CreateAccount extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-
+        if (!isLangEng) {
+            inputConfirmPassword.setHint("Konpirmahin Ang Password");
+            alreadyHaveAccount.setText("Mayroon nang account?");
+        }
 
         alreadyHaveAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,13 +74,31 @@ public class CreateAccount extends AppCompatActivity {
         String confirmPassword = inputConfirmPassword.getText().toString();
 
         if (!email.matches(emailPattern)) {
-            inputEmail.setError("Ipasok ang Tamang Email");
+            if (isLangEng) {
+                inputEmail.setError("Enter Correct Email");
+            } else {
+                inputEmail.setError("Ipasok ang Tamang Email");
+            }
         } else if (password.isEmpty() || password.length() < 10) {
-            inputPassword.setError("Ipasok ang Wastong Password");
+            if (isLangEng) {
+                inputPassword.setError("Enter Correct Password");
+            } else {
+                inputPassword.setError("Ipasok ang Wastong Password");
+            }
+
         } else if (!password.equals(confirmPassword)) {
-            inputConfirmPassword.setError("Hindi Tumutugma ang Password sa Parehong Field");
+            if (isLangEng) {
+                inputPassword.setError("Passwords Don't Match");
+            } else {
+                inputConfirmPassword.setError("Hindi Tumutugma ang Password sa Parehong Field");
+            }
+
         } else {
-            progressDialog.setMessage("Mangyaring Maghintay Habang Nagrerehistro....");
+            if (isLangEng) {
+                progressDialog.setMessage("Please Wait A While Registration Is In Progress....");
+            } else {
+                progressDialog.setMessage("Mangyaring Maghintay Habang Nagrerehistro....");
+            }
             progressDialog.setTitle("Registration");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
@@ -89,7 +113,11 @@ public class CreateAccount extends AppCompatActivity {
                         users.setEmail(email);
                         new UserPreferences(CreateAccount.this).saveLogin(users);
                         sendUSerToNextActivity();
-                        Toast.makeText(CreateAccount.this, "Maayos ang pagkarehistro", Toast.LENGTH_SHORT).show();
+                        if (isLangEng) {
+                            Toast.makeText(CreateAccount.this, "Successfully Registered", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(CreateAccount.this, "Maayos ang pagkarehistro", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         progressDialog.dismiss();
                         Toast.makeText(CreateAccount.this, "" + task.getException(), Toast.LENGTH_SHORT).show();

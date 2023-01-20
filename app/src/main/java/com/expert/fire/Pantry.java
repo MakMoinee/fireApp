@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.expert.fire.Interfaces.LocalFirestoreCallback;
+import com.expert.fire.LocalPreference.LanguagePref;
 import com.expert.fire.LocalPreference.UserPreferences;
 import com.expert.fire.Models.Dishes;
 import com.expert.fire.Models.Users;
@@ -42,7 +43,8 @@ public class Pantry extends AppCompatActivity {
     LocalFireStore db;
     ProgressDialog pdLoading;
     boolean cancelled = false;
-    private TextView lblIngredients;
+    private TextView lblIngredients, lblFavorites, lblUser;
+    boolean isLangEng = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +89,13 @@ public class Pantry extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (mTextTv.getText().toString().equals("")) {
-                    Toast.makeText(Pantry.this, "Mangyaring Huwag Mag-iwan ng Walang laman na mga Fields", Toast.LENGTH_SHORT).show();
+                    if (isLangEng) {
+                        Toast.makeText(Pantry.this, "Please Don't Leave Empty Fields", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        Toast.makeText(Pantry.this, "Mangyaring Huwag Mag-iwan ng Walang laman na mga Fields", Toast.LENGTH_SHORT).show();
+
+                    }
                 } else {
                     pdLoading.show();
                     String searchKey = mTextTv.getText().toString();
@@ -143,7 +151,12 @@ public class Pantry extends AppCompatActivity {
                                 startActivity(intent);
                                 mTextTv.setText("");
                             } else {
-                                Toast.makeText(Pantry.this, "Hindi Natagpuan ang sangkap", Toast.LENGTH_SHORT).show();
+                                if (isLangEng) {
+                                    Toast.makeText(Pantry.this, "Ingredient not found", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(Pantry.this, "Hindi Natagpuan ang sangkap", Toast.LENGTH_SHORT).show();
+                                }
+
                             }
 
                         }
@@ -180,6 +193,8 @@ public class Pantry extends AppCompatActivity {
         mVoiceBtn = findViewById(R.id.voiceBtn);
         btnGenerate = findViewById(R.id.btnGenerate);
         btnUser = findViewById(R.id.btnUser);
+        lblFavorites = findViewById(R.id.lblFavorites);
+        lblUser = findViewById(R.id.lblUser);
         siteInfo = getResources().getStringArray(R.array.siteInfo);
         db = new LocalFireStore(Pantry.this);
         pdLoading = new ProgressDialog(Pantry.this);
@@ -187,6 +202,16 @@ public class Pantry extends AppCompatActivity {
         btnFavorites = findViewById(R.id.btnFavorites);
         btnUpload = findViewById(R.id.btnUpload);
         lblIngredients = findViewById(R.id.lblIngredients);
+
+        Boolean isEng = new LanguagePref(Pantry.this).getIsEng();
+        if (isEng) {
+            isLangEng = true;
+            lblIngredients.setText("INGREDIENTS");
+            mTextTv.setHint("Enter you ingredients");
+            btnGenerate.setText("GENERATE");
+            lblUser.setText("User");
+            lblFavorites.setText("Favorites");
+        }
     }
 
     private void speak() {
@@ -194,7 +219,14 @@ public class Pantry extends AppCompatActivity {
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Kumusta? Sabihin ang iyong mga sangkap");
+
+        Boolean isEng = new LanguagePref(Pantry.this).getIsEng();
+        if (isEng) {
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "How are you? Please state your ingredients");
+        } else {
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Kumusta? Sabihin ang iyong mga sangkap");
+        }
+
 
         try {
             startActivityForResult(intent, REQUEST_CODE_SPEECH_INPUT);

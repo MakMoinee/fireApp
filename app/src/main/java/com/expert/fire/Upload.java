@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -28,6 +29,7 @@ import androidx.core.content.ContextCompat;
 
 import com.expert.fire.Interfaces.LocalFirestoreCallback;
 import com.expert.fire.Interfaces.SimpleListener;
+import com.expert.fire.LocalPreference.LanguagePref;
 import com.expert.fire.Models.Dishes;
 import com.expert.fire.Service.LocalFireStore;
 import com.expert.fire.Service.LocalStorage;
@@ -47,6 +49,8 @@ public class Upload extends AppCompatActivity {
     EditText editDish, editDesc, editIngredients, editInstructions, editVidUrl;
     LocalFireStore fs;
     LocalStorage storage;
+    Boolean isLangEng = false;
+    TextView lblPicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,14 +116,22 @@ public class Upload extends AppCompatActivity {
                                     @Override
                                     public void onSuccess() {
                                         pd.dismiss();
-                                        Toast.makeText(Upload.this, "Matagumpay na Nagdagdag ng Ulam at Larawan", Toast.LENGTH_SHORT).show();
+                                        if (isLangEng) {
+                                            Toast.makeText(Upload.this, "Successfully Added Dish and Image Uploaded Successfully", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(Upload.this, "Matagumpay na Nagdagdag ng Ulam at Larawan", Toast.LENGTH_SHORT).show();
+                                        }
                                         finish();
                                     }
 
                                     @Override
                                     public void onError(Exception error) {
                                         pd.dismiss();
-                                        Toast.makeText(Upload.this, "Matagumpay na Nagdagdag ng Dish Ngunit Nabigong Mag-upload ng Larawan", Toast.LENGTH_SHORT).show();
+                                        if (isLangEng) {
+                                            Toast.makeText(Upload.this, "Successfully Added Dish But Failed To Upload Image", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(Upload.this, "Matagumpay na Nagdagdag ng Dish Ngunit Nabigong Mag-upload ng Larawan", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
                                 });
                             }
@@ -127,7 +139,11 @@ public class Upload extends AppCompatActivity {
                             @Override
                             public void onError(Exception e) {
                                 pd.dismiss();
-                                Toast.makeText(Upload.this, "Nabigong magdagdag ng ulam, Pakisubukang Muli Mamaya", Toast.LENGTH_SHORT).show();
+                                if (isLangEng) {
+                                    Toast.makeText(Upload.this, "Failed to add dish, Please Try Again Later", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(Upload.this, "Nabigong magdagdag ng ulam, Pakisubukang Muli Mamaya", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                     }
@@ -179,7 +195,21 @@ public class Upload extends AppCompatActivity {
         fs = new LocalFireStore(Upload.this);
         btnBrowse = findViewById(R.id.btnBrowse);
         loadingImageDialog = new ProgressDialog(Upload.this);
-        loadingImageDialog.setMessage("Nilo-load ang Imahe...");
+        lblPicture = findViewById(R.id.lblPicture);
+        isLangEng = new LanguagePref(Upload.this).getIsEng();
+        if (isLangEng) {
+            loadingImageDialog.setMessage("Loading Image ...");
+            toolbar.setTitle("Upload");
+            lblPicture.setText("Picture");
+            editDesc.setHint("Description");
+            editDish.setHint("Name of Dish");
+            editIngredients.setHint("Ingredients");
+            editInstructions.setHint("Instructions");
+            btnOnUpload.setText("Upload");
+        } else {
+            loadingImageDialog.setMessage("Nilo-load ang Imahe...");
+        }
+
         btnOnUpload = findViewById(R.id.btnOnUpload);
         editDish = findViewById(R.id.editDish);
         editDesc = findViewById(R.id.editDesc);
@@ -187,7 +217,12 @@ public class Upload extends AppCompatActivity {
         editInstructions = findViewById(R.id.editInstructions);
         editVidUrl = findViewById(R.id.editVidUrl);
         pd = new ProgressDialog(Upload.this);
-        pd.setMessage("Nagpapadala ng Kahilingan...");
+
+        if (isLangEng) {
+            pd.setMessage("Sending Request...");
+        } else {
+            pd.setMessage("Nagpapadala ng Kahilingan...");
+        }
         pd.setCancelable(false);
     }
 
@@ -217,9 +252,15 @@ public class Upload extends AppCompatActivity {
                 } else {
                     bitmap = null;
                     loadingImageDialog.dismiss();
-                    Toast.makeText(
-                            Upload.this, "walang napiling larawan",
-                            Toast.LENGTH_LONG).show();
+                    if (isLangEng) {
+                        Toast.makeText(
+                                Upload.this, "No image selected",
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(
+                                Upload.this, "walang napiling larawan",
+                                Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         }

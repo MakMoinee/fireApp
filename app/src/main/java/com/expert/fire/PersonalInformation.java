@@ -5,17 +5,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.expert.fire.Interfaces.LocalFirestoreCallback;
+import com.expert.fire.LocalPreference.LanguagePref;
 import com.expert.fire.LocalPreference.PersonalInfoPref;
 import com.expert.fire.LocalPreference.UserPreferences;
 import com.expert.fire.Models.PersonalInfo;
 import com.expert.fire.Models.Users;
 import com.expert.fire.Service.LocalFireStore;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class PersonalInformation extends AppCompatActivity {
 
@@ -25,6 +28,9 @@ public class PersonalInformation extends AppCompatActivity {
     String tmpPass = "";
     ProgressDialog dialog;
     String docID = "";
+    boolean isLangEng = false;
+    TextView lblPersonalInfo;
+    TextInputLayout layoutName, layoutEmail, layoutNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +45,15 @@ public class PersonalInformation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (editName.getText().toString().equals("") || editEmail.getText().toString().equals("") || editPhoneNumber.getText().toString().equals("")) {
-                    Toast.makeText(PersonalInformation.this, "Mangyaring Huwag Mag-iwan ng Walang laman na mga FIelds", Toast.LENGTH_SHORT).show();
+                    if (isLangEng) {
+                        Toast.makeText(PersonalInformation.this, "Please Don't Leave Empty Fields", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(PersonalInformation.this, "Mangyaring Huwag Mag-iwan ng Walang laman na mga Fields", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     dialog.show();
                     PersonalInfo info = new PersonalInfo();
-                    if(docID!=""){
+                    if (docID != "") {
                         info.setDocID(docID);
                     }
 
@@ -63,7 +73,12 @@ public class PersonalInformation extends AppCompatActivity {
                                 public void onSuccess(PersonalInfo infos) {
                                     dialog.dismiss();
                                     new PersonalInfoPref(PersonalInformation.this).storeInfo(infos);
-                                    Toast.makeText(PersonalInformation.this, "Matagumpay na Na-update ang Personal na Impormasyon", Toast.LENGTH_SHORT).show();
+                                    if (isLangEng) {
+                                        Toast.makeText(PersonalInformation.this, "Successfully update personal information", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(PersonalInformation.this, "Matagumpay na Na-update ang Personal na Impormasyon", Toast.LENGTH_SHORT).show();
+                                    }
+
                                     finish();
                                 }
 
@@ -71,7 +86,12 @@ public class PersonalInformation extends AppCompatActivity {
                                 public void onError(Exception e) {
                                     dialog.dismiss();
                                     Log.e("ERROR_ADDING_PERSONAL_INFO", e.getMessage());
-                                    Toast.makeText(PersonalInformation.this, "Nabigong magdagdag ng personal na impormasyon, Pakisubukang Muli Mamaya", Toast.LENGTH_SHORT).show();
+                                    if (isLangEng) {
+                                        Toast.makeText(PersonalInformation.this, "Failed to update personal information, Please Try Again Later", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(PersonalInformation.this, "Nabigong magdagdag ng personal na impormasyon, Pakisubukang Muli Mamaya", Toast.LENGTH_SHORT).show();
+                                    }
+
                                 }
                             });
 
@@ -81,7 +101,12 @@ public class PersonalInformation extends AppCompatActivity {
                         public void onError(Exception e) {
                             dialog.dismiss();
                             Log.e("ERROR_ADDING_PERSONAL_INFO", e.getMessage());
-                            Toast.makeText(PersonalInformation.this, "Nabigong magdagdag ng personal na impormasyon, Pakisubukang Muli Mamaya", Toast.LENGTH_SHORT).show();
+                            if (isLangEng) {
+                                Toast.makeText(PersonalInformation.this, "Failed to update personal information, Please Try Again Later", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(PersonalInformation.this, "Nabigong magdagdag ng personal na impormasyon, Pakisubukang Muli Mamaya", Toast.LENGTH_SHORT).show();
+                            }
+
                         }
                     });
                 }
@@ -94,8 +119,19 @@ public class PersonalInformation extends AppCompatActivity {
         editEmail = findViewById(R.id.editEmail);
         btnUpdate = findViewById(R.id.btnUpdate);
         editPhoneNumber = findViewById(R.id.editPhoneNumber);
+        lblPersonalInfo = findViewById(R.id.lblPersonalInfo);
+        isLangEng = new LanguagePref(PersonalInformation.this).getIsEng();
         dialog = new ProgressDialog(PersonalInformation.this);
-        dialog.setMessage("Nagpapadala ng Kahilingan ...");
+        if (isLangEng) {
+            layoutName.setHint("Name");
+            layoutEmail.setHint("Email");
+            layoutNumber.setHint("Phone Number");
+            lblPersonalInfo.setText("Personal Information");
+            dialog.setMessage("Sending Request ...");
+        } else {
+            dialog.setMessage("Nagpapadala ng Kahilingan ...");
+        }
+
         dialog.setCancelable(false);
 
         Users users = new UserPreferences(PersonalInformation.this).getUsers();
@@ -124,7 +160,11 @@ public class PersonalInformation extends AppCompatActivity {
             @Override
             public void onSuccess(PersonalInfo infos) {
                 dialog.dismiss();
-                dialog.setMessage("Nagpapadala ng Kahilingan ...");
+                if (isLangEng) {
+                    dialog.setMessage("Sending Request ...");
+                } else {
+                    dialog.setMessage("Nagpapadala ng Kahilingan ...");
+                }
                 new PersonalInfoPref(PersonalInformation.this).storeInfo(infos);
                 editEmail.setText(infos.getEmail());
                 editName.setText(infos.getName());
@@ -135,11 +175,15 @@ public class PersonalInformation extends AppCompatActivity {
             @Override
             public void onError(Exception e) {
                 dialog.dismiss();
-                dialog.setMessage("Nagpapadala ng Kahilingan ...");
+                if (isLangEng) {
+                    dialog.setMessage("Sending Request ...");
+                } else {
+                    dialog.setMessage("Nagpapadala ng Kahilingan ...");
+                }
                 Users users = new UserPreferences(PersonalInformation.this).getUsers();
                 tmpPass = users.getPassword();
                 editEmail.setText(users.getEmail());
-             }
+            }
         });
     }
 }

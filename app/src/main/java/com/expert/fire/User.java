@@ -8,10 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.expert.fire.LocalPreference.LanguagePref;
 import com.expert.fire.LocalPreference.UserPreferences;
 import com.expert.fire.Models.Users;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,7 +24,8 @@ public class User extends AppCompatActivity {
     Button btnLogout;
     private AlertDialog linearUserDialog;
     FirebaseAuth mAuth;
-    RelativeLayout relSecurity, relPerson;
+    RelativeLayout relSecurity, relPerson, relLang;
+    TextView lblPersonalInfo, lblLanguage, lblSecurity;
     ProgressDialog pdLoading;
     Users nullUser;
 
@@ -38,6 +41,16 @@ public class User extends AppCompatActivity {
         relSecurity = findViewById(R.id.relSecurity);
         relPerson = findViewById(R.id.relPerson);
         mAuth = FirebaseAuth.getInstance();
+        relLang = findViewById(R.id.relLang);
+        lblPersonalInfo = findViewById(R.id.lblPersonalInfo);
+        lblLanguage = findViewById(R.id.lblLanguage);
+        lblSecurity = findViewById(R.id.lblSecurity);
+        Boolean isEng = new LanguagePref(User.this).getIsEng();
+        if (isEng) {
+            lblPersonalInfo.setText("Personal Information");
+            lblLanguage.setText("Language");
+            lblSecurity.setText("Security");
+        }
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +85,7 @@ public class User extends AppCompatActivity {
             }
         });
 
-        btnLanguage.setOnClickListener(new View.OnClickListener() {
+        relLang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(User.this, Language.class));

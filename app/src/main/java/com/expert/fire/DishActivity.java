@@ -27,6 +27,7 @@ import com.expert.fire.Common.Common;
 import com.expert.fire.Common.Constants;
 import com.expert.fire.Interfaces.SimpleListener;
 import com.expert.fire.LocalPreference.FavoritesPref;
+import com.expert.fire.LocalPreference.LanguagePref;
 import com.expert.fire.Models.Dishes;
 import com.expert.fire.Models.LocalFormats;
 import com.expert.fire.Models.Translation;
@@ -51,11 +52,11 @@ import java.util.Map;
 
 public class DishActivity extends AppCompatActivity {
 
-    private TextView txtTitle, lblVideo, lblDescription, txtDesc, txtIngredients, txtInstructions;
-    private String newTitle = "", origTitle = "", videoURL = "",descriptionTrans = "", description = "", ingredients = "", ingredientsTrans = "", instructionsTrans = "", instructions = "";
+    private TextView txtTitle, lblVideo, lblDescription, txtDesc, txtIngredients, txtInstructions, lblIngredients, lblInstructions;
+    private String newTitle = "", origTitle = "", videoURL = "", descriptionTrans = "", description = "", ingredients = "", ingredientsTrans = "", instructionsTrans = "", instructions = "";
     private Toolbar toolbar;
     private PlayerControlView playerView;
-    private RelativeLayout relVideo,relDish;
+    private RelativeLayout relVideo, relDish;
     private ExoPlayer player;
     private SurfaceView surfaceView;
     private ProgressBar pbLoading;
@@ -114,9 +115,11 @@ public class DishActivity extends AppCompatActivity {
         lblVideo.setVisibility(View.GONE);
         relVideo.setVisibility(View.GONE);
         lblDescription = findViewById(R.id.lblDescription);
+        lblInstructions = findViewById(R.id.lblInstructions);
         txtDesc = findViewById(R.id.txtDesc);
         txtIngredients = findViewById(R.id.txtIngredients);
         txtInstructions = findViewById(R.id.txtInstructions);
+        lblIngredients = findViewById(R.id.lblIngredients);
         surfaceView = findViewById(R.id.surfaceView);
         pbLoading = findViewById(R.id.progressLoading);
         playButton = findViewById(R.id.playButton);
@@ -138,111 +141,119 @@ public class DishActivity extends AppCompatActivity {
     }
 
     private void getTranslations(String title) {
-        Translation translation = new Translation();
-        translation.setTargetLang("tl");
-        translation.setSourceLang("auto");
-        translation.setText(instructions);
-        LocalRequest.getTranslation(DishActivity.this, translation, new SimpleListener() {
-            @Override
-            public void onSuccess(String response) {
-                try {
-                    Log.e("data", response);
-                    JSONObject obj = new JSONObject(response);
-                    if (obj.getInt("status") == 200) {
-                        instructionsTrans = obj.getString("translatedText");
-                        txtInstructions.setText(instructionsTrans);
-                    } else {
+        Boolean isEng = new LanguagePref(DishActivity.this).getIsEng();
+        if (isEng) {
+            Translation translation = new Translation();
+            translation.setTargetLang("tl");
+            translation.setSourceLang("auto");
+            translation.setText(instructions);
+            LocalRequest.getTranslation(DishActivity.this, translation, new SimpleListener() {
+                @Override
+                public void onSuccess(String response) {
+                    try {
+                        Log.e("data", response);
+                        JSONObject obj = new JSONObject(response);
+                        if (obj.getInt("status") == 200) {
+                            instructionsTrans = obj.getString("translatedText");
+                            txtInstructions.setText(instructionsTrans);
+                        } else {
 
+                        }
+
+                        dialog.dismiss();
+                    } catch (JSONException e) {
+                        dialog.dismiss();
+                        e.printStackTrace();
+                        Log.e("ERR", e.getMessage());
                     }
-
-                    dialog.dismiss();
-                } catch (JSONException e) {
-                    dialog.dismiss();
-                    e.printStackTrace();
-                    Log.e("ERR", e.getMessage());
                 }
-            }
 
-            @Override
-            public void onError(VolleyError error) {
-                dialog.dismiss();
-                Log.e("ERR", error.toString());
-            }
-        });
-
-
-        Translation translation2 = new Translation();
-        translation2.setTargetLang("tl");
-        translation2.setSourceLang("auto");
-        translation2.setText(ingredients);
-        LocalRequest.getTranslation(DishActivity.this, translation2, new SimpleListener() {
-            @Override
-            public void onSuccess(String response) {
-                try {
-                    Log.e("data", response);
-                    JSONObject obj = new JSONObject(response);
-                    if (obj.getInt("status") == 200) {
-                        ingredientsTrans = obj.getString("translatedText");
-                        txtIngredients.setText(ingredientsTrans);
-                    } else {
-
-                    }
-
+                @Override
+                public void onError(VolleyError error) {
                     dialog.dismiss();
-                } catch (JSONException e) {
-                    dialog.dismiss();
-                    e.printStackTrace();
-                    Log.e("ERR", e.getMessage());
+                    Log.e("ERR", error.toString());
                 }
-            }
-
-            @Override
-            public void onError(VolleyError error) {
-                dialog.dismiss();
-                Log.e("ERR", error.toString());
-            }
-        });
+            });
 
 
-        Translation translation3 = new Translation();
-        translation3.setTargetLang("tl");
-        translation3.setSourceLang("auto");
-        translation3.setText(description);
-        LocalRequest.getTranslation(DishActivity.this, translation3, new SimpleListener() {
-            @Override
-            public void onSuccess(String response) {
-                try {
-                    Log.e("data", response);
-                    JSONObject obj = new JSONObject(response);
-                    if (obj.getInt("status") == 200) {
-                        descriptionTrans = obj.getString("translatedText");
-                        txtDesc.setText(descriptionTrans);
-                    } else {
+            Translation translation2 = new Translation();
+            translation2.setTargetLang("tl");
+            translation2.setSourceLang("auto");
+            translation2.setText(ingredients);
+            LocalRequest.getTranslation(DishActivity.this, translation2, new SimpleListener() {
+                @Override
+                public void onSuccess(String response) {
+                    try {
+                        Log.e("data", response);
+                        JSONObject obj = new JSONObject(response);
+                        if (obj.getInt("status") == 200) {
+                            ingredientsTrans = obj.getString("translatedText");
+                            txtIngredients.setText(ingredientsTrans);
+                        } else {
 
+                        }
+
+                        dialog.dismiss();
+                    } catch (JSONException e) {
+                        dialog.dismiss();
+                        e.printStackTrace();
+                        Log.e("ERR", e.getMessage());
                     }
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    dialog.dismiss();
+                    Log.e("ERR", error.toString());
+                }
+            });
+
+
+            Translation translation3 = new Translation();
+            translation3.setTargetLang("tl");
+            translation3.setSourceLang("auto");
+            translation3.setText(description);
+            LocalRequest.getTranslation(DishActivity.this, translation3, new SimpleListener() {
+                @Override
+                public void onSuccess(String response) {
+                    try {
+                        Log.e("data", response);
+                        JSONObject obj = new JSONObject(response);
+                        if (obj.getInt("status") == 200) {
+                            descriptionTrans = obj.getString("translatedText");
+                            txtDesc.setText(descriptionTrans);
+                        } else {
+
+                        }
+                        relDish.setVisibility(View.VISIBLE);
+                        dialog.dismiss();
+                    } catch (JSONException e) {
+                        dialog.dismiss();
+                        e.printStackTrace();
+                        Log.e("ERR", e.getMessage());
+                        relDish.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    dialog.dismiss();
+                    Log.e("ERR", error.toString());
                     relDish.setVisibility(View.VISIBLE);
-                    dialog.dismiss();
-                } catch (JSONException e) {
-                    dialog.dismiss();
-                    e.printStackTrace();
-                    Log.e("ERR", e.getMessage());
-                    relDish.setVisibility(View.VISIBLE);
                 }
-            }
+            });
 
-            @Override
-            public void onError(VolleyError error) {
-                dialog.dismiss();
-                Log.e("ERR", error.toString());
-                relDish.setVisibility(View.VISIBLE);
-            }
-        });
 
+        } else {
+            lblDescription.setText("DESCRIPTION");
+            lblIngredients.setText("INGREDIENTS");
+            lblInstructions.setText("INSTRUCTIONS");
+        }
 
         if (title != "") {
             origTitle = title;
             newTitle = title.replace("-", " ");
-            newTitle = newTitle.substring(0,1).toUpperCase() +  newTitle.substring(1);
+            newTitle = newTitle.substring(0, 1).toUpperCase() + newTitle.substring(1);
         }
 
         if (description.equals("")) {

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.expert.fire.Interfaces.SimpleListener;
+import com.expert.fire.LocalPreference.LanguagePref;
 import com.expert.fire.LocalPreference.UserPreferences;
 import com.expert.fire.Models.Users;
 import com.expert.fire.Service.LocalFireAuth;
@@ -18,6 +19,7 @@ public class Security extends AppCompatActivity {
     TextInputEditText oldPass, newPass;
     Button changePassBtn;
     LocalFireAuth auth;
+    Boolean isLangEng = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +40,15 @@ public class Security extends AppCompatActivity {
     }
 
     private void initViews() {
+        isLangEng = new LanguagePref(Security.this).getIsEng();
         auth = new LocalFireAuth(new SimpleListener() {
             @Override
             public void onSuccess() {
-                Toast.makeText(Security.this, "Matagumpay na Na-update ang Password, Awtomatikong Nagla-log Out ...", Toast.LENGTH_SHORT).show();
+                if (isLangEng) {
+                    Toast.makeText(Security.this, "Successfully updated password, Automatically Logging Out ...", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Security.this, "Matagumpay na Na-update ang Password, Awtomatikong Nagla-log Out ...", Toast.LENGTH_SHORT).show();
+                }
                 new UserPreferences(Security.this).saveLogin(new Users());
                 new UserPreferences(Security.this).clearUsers();
                 startActivity(new Intent(Security.this, MainActivity.class));
@@ -51,11 +58,16 @@ public class Security extends AppCompatActivity {
 
             @Override
             public void onFail() {
-                Toast.makeText(Security.this, "Nabigong I-update ang Password, Subukang Muli Mamaya.", Toast.LENGTH_SHORT).show();
+                if (isLangEng) {
+                    Toast.makeText(Security.this, "Failed to update password, Please Try Again", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Security.this, "Nabigong I-update ang Password, Subukang Muli Mamaya.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         oldPass = findViewById(R.id.cPasswordEt);
         newPass = findViewById(R.id.nPasswordEt);
         changePassBtn = findViewById(R.id.changePassBtn);
+
     }
 }

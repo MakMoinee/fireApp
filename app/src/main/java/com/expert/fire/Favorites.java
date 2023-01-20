@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.expert.fire.Adapters.FavoritesAdapter;
 import com.expert.fire.Interfaces.SimpleListener;
 import com.expert.fire.LocalPreference.FavoritesPref;
+import com.expert.fire.LocalPreference.LanguagePref;
 import com.expert.fire.Models.Dishes;
 import com.google.android.material.appbar.MaterialToolbar;
 
@@ -23,6 +24,7 @@ public class Favorites extends AppCompatActivity {
     FavoritesAdapter adapter;
     List<Dishes> dishList;
     TextView txtNoFavorites;
+    Boolean isLangEng = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,11 @@ public class Favorites extends AppCompatActivity {
         toolbar = findViewById(R.id.mToolbar);
         txtNoFavorites = findViewById(R.id.txtNoFavorites);
         txtNoFavorites.setVisibility(View.GONE);
+        isLangEng = new LanguagePref(Favorites.this).getIsEng();
+        if (isLangEng) {
+            txtNoFavorites.setText("There are no list of favorites");
+            toolbar.setTitle("Favorites");
+        }
         loadData();
 
     }
