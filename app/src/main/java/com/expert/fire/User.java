@@ -28,6 +28,7 @@ public class User extends AppCompatActivity {
     TextView lblPersonalInfo, lblLanguage, lblSecurity;
     ProgressDialog pdLoading;
     Users nullUser;
+    Boolean isLangEng = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +47,11 @@ public class User extends AppCompatActivity {
         lblLanguage = findViewById(R.id.lblLanguage);
         lblSecurity = findViewById(R.id.lblSecurity);
         Boolean isEng = new LanguagePref(User.this).getIsEng();
-        if (isEng) {
-            lblPersonalInfo.setText("Personal Information");
-            lblLanguage.setText("Language");
-            lblSecurity.setText("Security");
+        isLangEng = isEng;
+        if (!isEng) {
+            lblPersonalInfo.setText("Personal Na Inpormasyon");
+            lblLanguage.setText("Wika");
+            lblSecurity.setText("Seguridad");
         }
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -71,10 +73,18 @@ public class User extends AppCompatActivity {
                         }
                     }
                 };
-                lBuilder.setMessage("Sigurado Ka bang Gusto Mong Mag-logout?")
-                        .setNegativeButton("Yes", dListener)
-                        .setPositiveButton("No", dListener)
-                        .show();
+                if (!isEng) {
+                    lBuilder.setMessage("Sigurado Ka bang Gusto Mong Mag-logout?")
+                            .setNegativeButton("Yes", dListener)
+                            .setPositiveButton("No", dListener)
+                            .show();
+                } else {
+                    lBuilder.setMessage("Are You Sure You Want To Logout?")
+                            .setNegativeButton("Yes", dListener)
+                            .setPositiveButton("No", dListener)
+                            .show();
+                }
+
             }
         });
 
@@ -133,10 +143,18 @@ public class User extends AppCompatActivity {
                         }
                     }
                 };
-                lBuilder.setMessage("Sigurado Ka bang Gusto Mong Mag-logout?")
-                        .setNegativeButton("Yes", dListener)
-                        .setPositiveButton("No", dListener)
-                        .show();
+                if (isLangEng) {
+                    lBuilder.setMessage("Are You Sure You Want To Logout?")
+                            .setNegativeButton("Yes", dListener)
+                            .setPositiveButton("No", dListener)
+                            .show();
+                } else {
+                    lBuilder.setMessage("Sigurado Ka bang Gusto Mong Mag-logout?")
+                            .setNegativeButton("Yes", dListener)
+                            .setPositiveButton("No", dListener)
+                            .show();
+                }
+
 
             }
         });

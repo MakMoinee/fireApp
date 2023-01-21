@@ -1,8 +1,5 @@
 package com.expert.fire;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,9 +11,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.expert.fire.LocalPreference.LanguagePref;
-import com.expert.fire.R;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
+import com.expert.fire.LocalPreference.LanguagePref;
 import com.expert.fire.LocalPreference.UserPreferences;
 import com.expert.fire.Models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnLogin;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     ProgressDialog progressDialog;
+    Boolean isLangEng = false;
 
     FirebaseAuth mAuth;
     FirebaseUser mUser;
@@ -62,12 +61,13 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         Boolean isEng = new LanguagePref(MainActivity.this).getIsEng();
-        if (isEng) {
+        isLangEng = isEng;
+        if (!isEng) {
             btnLogin.setText("Login");
             inputEmail.setHint("Email");
             inputPassword.setHint("Password");
-            forgotPassword.setText("Forgot Password?");
-            createNewAccount.setText("Create New Account");
+            forgotPassword.setText("Nakalimutan ang password?");
+            createNewAccount.setText("Lumikha ng bagong account?");
         }
 
         createNewAccount.setOnClickListener(new View.OnClickListener() {
@@ -99,11 +99,23 @@ public class MainActivity extends AppCompatActivity {
         String password = inputPassword.getText().toString();
 
         if (!email.matches(emailPattern)) {
-            inputEmail.setError("Ipasok ang Tamang Email");
+            if (isLangEng) {
+                inputEmail.setError("Enter Correct Email");
+            } else {
+                inputEmail.setError("Ipasok ang Tamang Email");
+            }
         } else if (password.isEmpty() || password.length() < 10) {
-            inputPassword.setError("Ipasok ang Wastong Password");
+            if (isLangEng) {
+                inputPassword.setError("Enter Correct Password");
+            } else {
+                inputPassword.setError("Ipasok ang Wastong Password");
+            }
         } else {
-            progressDialog.setMessage("Mangyaring Maghintay Habang Nag-log in....");
+            if (isLangEng) {
+                progressDialog.setMessage("Please Wait While Logging in....");
+            } else {
+                progressDialog.setMessage("Mangyaring Maghintay Habang Nag-log in....");
+            }
             progressDialog.setTitle("Login");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
@@ -117,8 +129,13 @@ public class MainActivity extends AppCompatActivity {
                         users.setPassword(inputPassword.getText().toString());
                         users.setEmail(inputEmail.getText().toString());
                         new UserPreferences(MainActivity.this).saveLogin(users);
+                        new LanguagePref(MainActivity.this).storeIsEng(true);
                         sendUSerToNextActivity();
-                        Toast.makeText(MainActivity.this, "Matagumpay na Mag-login", Toast.LENGTH_SHORT).show();
+                        if (isLangEng) {
+                            Toast.makeText(MainActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Matagumpay na Mag-login", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         progressDialog.dismiss();
                         Toast.makeText(MainActivity.this, "" + task.getException(), Toast.LENGTH_SHORT).show();

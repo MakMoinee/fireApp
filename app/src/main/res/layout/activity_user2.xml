@@ -78,7 +78,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="40dp"
                 android:layout_toEndOf="@+id/personalInfo"
-                android:text="Personal na Impormasyon"
+                android:text="Personal Information"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -113,7 +113,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="40dp"
                 android:layout_toEndOf="@+id/language"
-                android:text="Wika"
+                android:text="Language"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -148,7 +148,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="40dp"
                 android:layout_toEndOf="@+id/security"
-                android:text="Seguridad"
+                android:text="Security"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 

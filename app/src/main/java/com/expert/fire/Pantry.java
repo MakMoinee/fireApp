@@ -198,7 +198,7 @@ public class Pantry extends AppCompatActivity {
         siteInfo = getResources().getStringArray(R.array.siteInfo);
         db = new LocalFireStore(Pantry.this);
         pdLoading = new ProgressDialog(Pantry.this);
-        pdLoading.setMessage("Nagpapadala ng Kahilingan ...");
+
         btnFavorites = findViewById(R.id.btnFavorites);
         btnUpload = findViewById(R.id.btnUpload);
         lblIngredients = findViewById(R.id.lblIngredients);
@@ -211,6 +211,9 @@ public class Pantry extends AppCompatActivity {
             btnGenerate.setText("GENERATE");
             lblUser.setText("User");
             lblFavorites.setText("Favorites");
+            pdLoading.setMessage("Sending Request ...");
+        } else {
+            pdLoading.setMessage("Nagpapadala ng Kahilingan ...");
         }
     }
 

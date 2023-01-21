@@ -19,6 +19,7 @@ public class Language extends AppCompatActivity {
     MaterialToolbar toolbar;
     ListView lv;
     LanguageAdapter adapter;
+    Boolean isLangEng = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class Language extends AppCompatActivity {
     private void initViews() {
         toolbar = findViewById(R.id.toolbar);
         lv = findViewById(R.id.lv);
+        isLangEng = new LanguagePref(Language.this).getIsEng();
         loadList();
     }
 

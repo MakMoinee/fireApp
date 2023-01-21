@@ -63,6 +63,7 @@ public class DishActivity extends AppCompatActivity {
     private ImageButton playButton;
     private Dishes fDish;
     private ProgressDialog dialog;
+    Boolean isLangEng = false;
 
 
     @Override
@@ -104,9 +105,18 @@ public class DishActivity extends AppCompatActivity {
 
     private void initViews() {
         dialog = new ProgressDialog(DishActivity.this);
-        dialog.setMessage("Naglo-load ng Mga Pagsasalin ...");
-        dialog.setCancelable(false);
-        dialog.show();
+        isLangEng = new LanguagePref(DishActivity.this).getIsEng();
+        if (!isLangEng) {
+            dialog.setMessage("Naglo-load ng Mga Pagsasalin ...");
+            dialog.setCancelable(false);
+            dialog.show();
+        }else{
+            dialog.setMessage("Loading Translation ...");
+            dialog.setCancelable(false);
+            dialog.show();
+        }
+
+
         relDish = findViewById(R.id.relDish);
         toolbar = findViewById(R.id.toolbar);
         playerView = findViewById(R.id.playerView);

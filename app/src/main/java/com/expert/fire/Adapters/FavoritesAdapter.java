@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.expert.fire.LocalPreference.LanguagePref;
 import com.expert.fire.R;
 import com.expert.fire.DishActivity;
 import com.expert.fire.Interfaces.SimpleListener;
@@ -27,11 +28,13 @@ public class FavoritesAdapter extends BaseAdapter {
     TextView txtDish;
     ImageButton btnFav;
     SimpleListener listener;
+    Boolean isLangEng = false;
 
     public FavoritesAdapter(Context mContext, List<Dishes> d, SimpleListener l) {
         this.context = mContext;
         this.dishesList = d;
         this.listener = l;
+        isLangEng = new LanguagePref(this.context).getIsEng();
     }
 
     @Override
@@ -97,11 +100,21 @@ public class FavoritesAdapter extends BaseAdapter {
                         }
                     }
                 };
-                mBuilder.setMessage("Sigurado Ka bang Gusto Mong Tanggalin ang Ulam na Ito Sa Mga Paborito Mo?")
-                        .setNegativeButton("Yes", dListener)
-                        .setPositiveButton("No", dListener)
-                        .setCancelable(false)
-                        .show();
+
+                if (isLangEng) {
+                    mBuilder.setMessage("Are you want to remove this dish to your favorites?")
+                            .setNegativeButton("Yes", dListener)
+                            .setPositiveButton("No", dListener)
+                            .setCancelable(false)
+                            .show();
+                } else {
+                    mBuilder.setMessage("Sigurado Ka bang Gusto Mong Tanggalin ang Ulam na Ito Sa Mga Paborito Mo?")
+                            .setNegativeButton("Yes", dListener)
+                            .setPositiveButton("No", dListener)
+                            .setCancelable(false)
+                            .show();
+                }
+
             }
         });
     }
