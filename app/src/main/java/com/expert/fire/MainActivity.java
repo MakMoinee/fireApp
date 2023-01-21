@@ -63,11 +63,12 @@ public class MainActivity extends AppCompatActivity {
         Boolean isEng = new LanguagePref(MainActivity.this).getIsEng();
         isLangEng = isEng;
         if (!isEng) {
-            btnLogin.setText("Login");
+            btnLogin.setText("Mag Login");
             inputEmail.setHint("Email");
             inputPassword.setHint("Password");
             forgotPassword.setText("Nakalimutan ang password?");
             createNewAccount.setText("Lumikha ng bagong account?");
+
         }
 
         createNewAccount.setOnClickListener(new View.OnClickListener() {
