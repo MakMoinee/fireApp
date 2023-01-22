@@ -13,6 +13,7 @@
     tools:context=".Security">
 
     <TextView
+        android:id="@+id/lblForgotPass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Palitan Ang Password"

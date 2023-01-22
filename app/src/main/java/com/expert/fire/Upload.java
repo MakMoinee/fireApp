@@ -87,10 +87,18 @@ public class Upload extends AppCompatActivity {
                         editIngredients.getText().toString().equals("") ||
                         editInstructions.getText().toString().equals("") ||
                         editVidUrl.getText().toString().equals("")) {
-                    Toast.makeText(Upload.this, "Mangyaring Huwag Mag-iwan ng Walang Lamang Mga Patlang", Toast.LENGTH_SHORT).show();
+                    if (isLangEng) {
+                        Toast.makeText(Upload.this, "Please Don't Leave Empty Fields", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(Upload.this, "Mangyaring Huwag Mag-iwan ng Walang Lamang Mga Patlang", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     if (!editVidUrl.getText().toString().contains("https://www.youtube.com/embed")) {
-                        Toast.makeText(Upload.this, "Hindi Wasto ang Url ng Video", Toast.LENGTH_SHORT).show();
+                        if (isLangEng) {
+                            Toast.makeText(Upload.this, "Invalid url format of video", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(Upload.this, "Hindi Wasto ang Url ng Video", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         pd.show();
                         Dishes dishes = new Dishes();

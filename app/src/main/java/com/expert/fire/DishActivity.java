@@ -111,16 +111,6 @@ public class DishActivity extends AppCompatActivity {
 
     private void initViews() {
         dialog = new ProgressDialog(DishActivity.this);
-        isLangEng = new LanguagePref(DishActivity.this).getIsEng();
-        if (!isLangEng) {
-            dialog.setMessage("Naglo-load ng Mga Pagsasalin ...");
-            dialog.setCancelable(false);
-            dialog.show();
-        } else {
-            dialog.setMessage("Loading Translation ...");
-            dialog.setCancelable(false);
-            dialog.show();
-        }
 
 
         relDish = findViewById(R.id.relDish);
@@ -141,6 +131,19 @@ public class DishActivity extends AppCompatActivity {
         playButton = findViewById(R.id.playButton);
         player = new ExoPlayer.Builder(DishActivity.this).build();
         playerView.hide();
+        isLangEng = new LanguagePref(DishActivity.this).getIsEng();
+        if (!isLangEng) {
+            dialog.setMessage("Naglo-load ng Mga Pagsasalin ...");
+            dialog.setCancelable(false);
+            dialog.show();
+        } else {
+            lblDescription.setText("DESCRIPTION");
+            lblIngredients.setText("INGREDIENTS");
+            lblInstructions.setText("INSTRUCTIONS");
+            dialog.setMessage("Loading Translation ...");
+            dialog.setCancelable(false);
+            dialog.show();
+        }
         String title = getIntent().getStringExtra("title");
         videoURL = getIntent().getStringExtra("videoURL");
         description = getIntent().getStringExtra("description");
@@ -157,8 +160,7 @@ public class DishActivity extends AppCompatActivity {
     }
 
     private void getTranslations(String title) {
-        Boolean isEng = new LanguagePref(DishActivity.this).getIsEng();
-        if (isEng) {
+        if (!isLangEng) {
             Translation translation = new Translation();
             translation.setTargetLang("tl");
             translation.setSourceLang("auto");
@@ -261,6 +263,8 @@ public class DishActivity extends AppCompatActivity {
 
 
         } else {
+            dialog.dismiss();
+            relDish.setVisibility(View.VISIBLE);
             lblDescription.setText("DESCRIPTION");
             lblIngredients.setText("INGREDIENTS");
             lblInstructions.setText("INSTRUCTIONS");

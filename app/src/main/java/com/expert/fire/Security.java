@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ public class Security extends AppCompatActivity {
     LocalFireAuth auth;
     Boolean isLangEng = false;
     TextInputLayout passwordTIL, cPasswordTIL;
+    TextView lblForgotPass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,7 @@ public class Security extends AppCompatActivity {
 
     private void initViews() {
         isLangEng = new LanguagePref(Security.this).getIsEng();
-
+        lblForgotPass = findViewById(R.id.lblForgotPass);
         auth = new LocalFireAuth(new SimpleListener() {
             @Override
             public void onSuccess() {
@@ -77,6 +79,7 @@ public class Security extends AppCompatActivity {
             changePassBtn.setText("Change Password");
             cPasswordTIL.setHint("New Password");
             passwordTIL.setHint("Current Password");
+            lblForgotPass.setText("Change Password");
         }
     }
 }
