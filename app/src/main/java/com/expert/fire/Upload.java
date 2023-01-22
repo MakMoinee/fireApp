@@ -194,8 +194,13 @@ public class Upload extends AppCompatActivity {
         storage = new LocalStorage(Upload.this);
         fs = new LocalFireStore(Upload.this);
         btnBrowse = findViewById(R.id.btnBrowse);
+        editDesc = findViewById(R.id.editDesc);
+        editDish = findViewById(R.id.editDish);
+        editIngredients = findViewById(R.id.editIngredients);
+        editInstructions = findViewById(R.id.editInstructions);
         loadingImageDialog = new ProgressDialog(Upload.this);
         lblPicture = findViewById(R.id.lblPicture);
+        btnOnUpload = findViewById(R.id.btnOnUpload);
         isLangEng = new LanguagePref(Upload.this).getIsEng();
         if (isLangEng) {
             loadingImageDialog.setMessage("Loading Image ...");

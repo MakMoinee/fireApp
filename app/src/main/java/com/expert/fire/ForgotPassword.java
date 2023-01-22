@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.expert.fire.LocalPreference.LanguagePref;
 import com.expert.fire.databinding.ActivityForgotPasswordBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -29,6 +30,7 @@ public class ForgotPassword extends AppCompatActivity {
         binding = ActivityForgotPasswordBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         lblForgotPass = findViewById(R.id.lblForgotPass);
+        isLangEng = new LanguagePref(ForgotPassword.this).getIsEng();
         if (isLangEng) {
             lblForgotPass.setText("Forgot Password");
             binding.btnForgotpass.setText("Change Password");

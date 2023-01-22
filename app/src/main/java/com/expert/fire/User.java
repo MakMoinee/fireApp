@@ -167,5 +167,16 @@ public class User extends AppCompatActivity {
         if (users == null) {
             finish();
         }
+        Boolean isEng = new LanguagePref(User.this).getIsEng();
+        isLangEng = isEng;
+        if (!isEng) {
+            lblPersonalInfo.setText("Personal Na Inpormasyon");
+            lblLanguage.setText("Wika");
+            lblSecurity.setText("Seguridad");
+        }else{
+            lblPersonalInfo.setText("Personal Information");
+            lblLanguage.setText("Language");
+            lblSecurity.setText("Security");
+        }
     }
 }

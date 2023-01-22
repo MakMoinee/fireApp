@@ -87,7 +87,13 @@ public class DishActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.menu_favor:
                         new FavoritesPref(DishActivity.this).storeDish(fDish);
-                        Toast.makeText(DishActivity.this, "Matagumpay na Nadagdag sa Mga Paborito", Toast.LENGTH_SHORT).show();
+                        if (isLangEng) {
+                            Toast.makeText(DishActivity.this, "Successfully Added To Favorites", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            Toast.makeText(DishActivity.this, "Matagumpay na Nadagdag sa Mga Paborito", Toast.LENGTH_SHORT).show();
+
+                        }
                         break;
                 }
                 return false;
@@ -110,7 +116,7 @@ public class DishActivity extends AppCompatActivity {
             dialog.setMessage("Naglo-load ng Mga Pagsasalin ...");
             dialog.setCancelable(false);
             dialog.show();
-        }else{
+        } else {
             dialog.setMessage("Loading Translation ...");
             dialog.setCancelable(false);
             dialog.show();

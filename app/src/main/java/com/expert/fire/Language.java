@@ -59,10 +59,19 @@ public class Language extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         lv = findViewById(R.id.lv);
         isLangEng = new LanguagePref(Language.this).getIsEng();
+        if (isLangEng) {
+            toolbar.setTitle("Language");
+        }
         loadList();
     }
 
     private void loadList() {
+        isLangEng = new LanguagePref(Language.this).getIsEng();
+        if (isLangEng) {
+            toolbar.setTitle("Language");
+        }else{
+            toolbar.setTitle("Wika");
+        }
         List<String> list = new ArrayList<>();
         list.add("Tagalog");
         list.add("English");

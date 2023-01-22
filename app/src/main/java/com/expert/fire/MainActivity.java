@@ -46,7 +46,10 @@ public class MainActivity extends AppCompatActivity {
                 sendUSerToNextActivity();
             }
 
-
+            isLangEng = new LanguagePref(MainActivity.this).getIsEng();
+        } else {
+            new LanguagePref(MainActivity.this).storeIsEng(true);
+            isLangEng = true;
         }
         setContentView(R.layout.activity_main);
         createNewAccount = findViewById(R.id.createNewAccount);
@@ -60,9 +63,7 @@ public class MainActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-        Boolean isEng = new LanguagePref(MainActivity.this).getIsEng();
-        isLangEng = isEng;
-        if (!isEng) {
+        if (!isLangEng) {
             btnLogin.setText("Mag Login");
             inputEmail.setHint("Email");
             inputPassword.setHint("Password");

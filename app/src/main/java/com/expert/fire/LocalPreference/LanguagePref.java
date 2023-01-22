@@ -20,6 +20,10 @@ public class LanguagePref {
     }
 
     public boolean getIsEng() {
-        return pref.getBoolean("isEng", false);
+        Boolean isEng = pref.getBoolean("isEng", false);
+        if (isEng == null) {
+            return false;
+        }
+        return isEng;
     }
 }

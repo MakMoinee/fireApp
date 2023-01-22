@@ -1,12 +1,12 @@
 package com.expert.fire;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.expert.fire.Interfaces.SimpleListener;
 import com.expert.fire.LocalPreference.LanguagePref;
@@ -14,12 +14,14 @@ import com.expert.fire.LocalPreference.UserPreferences;
 import com.expert.fire.Models.Users;
 import com.expert.fire.Service.LocalFireAuth;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class Security extends AppCompatActivity {
     TextInputEditText oldPass, newPass;
     Button changePassBtn;
     LocalFireAuth auth;
     Boolean isLangEng = false;
+    TextInputLayout passwordTIL, cPasswordTIL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class Security extends AppCompatActivity {
 
     private void initViews() {
         isLangEng = new LanguagePref(Security.this).getIsEng();
+
         auth = new LocalFireAuth(new SimpleListener() {
             @Override
             public void onSuccess() {
@@ -67,7 +70,13 @@ public class Security extends AppCompatActivity {
         });
         oldPass = findViewById(R.id.cPasswordEt);
         newPass = findViewById(R.id.nPasswordEt);
+        cPasswordTIL = findViewById(R.id.cPasswordTIL);
+        passwordTIL = findViewById(R.id.passwordTIL);
         changePassBtn = findViewById(R.id.changePassBtn);
-
+        if (isLangEng) {
+            changePassBtn.setText("Change Password");
+            cPasswordTIL.setHint("New Password");
+            passwordTIL.setHint("Current Password");
+        }
     }
 }

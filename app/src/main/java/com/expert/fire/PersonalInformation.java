@@ -119,12 +119,14 @@ public class PersonalInformation extends AppCompatActivity {
         editEmail = findViewById(R.id.editEmail);
         btnUpdate = findViewById(R.id.btnUpdate);
         editPhoneNumber = findViewById(R.id.editPhoneNumber);
+        layoutEmail = findViewById(R.id.layoutEmail2);
+        layoutName = findViewById(R.id.layoutName);
+        layoutNumber = findViewById(R.id.layoutNumber);
         lblPersonalInfo = findViewById(R.id.lblPersonalInfo);
         isLangEng = new LanguagePref(PersonalInformation.this).getIsEng();
         dialog = new ProgressDialog(PersonalInformation.this);
         if (isLangEng) {
             layoutName.setHint("Name");
-            layoutEmail.setHint("Email");
             layoutNumber.setHint("Phone Number");
             lblPersonalInfo.setText("Personal Information");
             dialog.setMessage("Sending Request ...");
@@ -147,7 +149,11 @@ public class PersonalInformation extends AppCompatActivity {
             editPhoneNumber.setText(info.getPhoneNum());
             docID = info.getDocID();
         } else {
-            dialog.setMessage("Loading Infos ...");
+            if (isLangEng) {
+                dialog.setMessage("Loading Infos ...");
+            } else {
+                dialog.setMessage("Naglo-load ng Infos ...");
+            }
             dialog.show();
             loadInfoData(users.getEmail());
         }
