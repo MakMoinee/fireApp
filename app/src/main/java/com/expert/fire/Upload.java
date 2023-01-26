@@ -137,28 +137,13 @@ public class Upload extends AppCompatActivity {
                         fs.addIngredient(dishes, new LocalFirestoreCallback() {
                             @Override
                             public void onSuccess() {
-                                storage.uploadImage(bitmap, editDish.getText().toString() + ".jpg", new SimpleListener() {
-                                    @Override
-                                    public void onSuccess() {
-                                        pd.dismiss();
-                                        if (isLangEng) {
-                                            Toast.makeText(Upload.this, "Successfully Added Dish and Image Uploaded Successfully", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            Toast.makeText(Upload.this, "Matagumpay na Nagdagdag ng Ulam at Larawan", Toast.LENGTH_SHORT).show();
-                                        }
-                                        finish();
-                                    }
-
-                                    @Override
-                                    public void onError(Exception error) {
-                                        pd.dismiss();
-                                        if (isLangEng) {
-                                            Toast.makeText(Upload.this, "Successfully Added Dish But Failed To Upload Image", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            Toast.makeText(Upload.this, "Matagumpay na Nagdagdag ng Dish Ngunit Nabigong Mag-upload ng Larawan", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
+                                pd.dismiss();
+                                if (isLangEng) {
+                                    Toast.makeText(Upload.this, "Successfully Added Dish", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(Upload.this, "Matagumpay na Nagdagdag ng Ulam", Toast.LENGTH_SHORT).show();
+                                }
+                                clearFields();
                             }
 
                             @Override
@@ -182,6 +167,14 @@ public class Upload extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void clearFields() {
+        editDesc.setText("");
+        editDish.setText("");
+        editIngredients.setText("");
+        editInstructions.setText("");
+        editVidUrl.setText("");
     }
 
     private void browseImage() {

@@ -168,7 +168,7 @@ public class Pantry extends AppCompatActivity {
                                 }
 
                             }
-                            pdLoading.hide();
+                            pdLoading.dismiss();
                             if (validCount == searchArr.length) {
                                 recommendList = filterDishList;
                                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(Pantry.this);
