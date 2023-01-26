@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,7 +41,7 @@ public class Pantry extends AppCompatActivity {
 
     private static final int REQUEST_CODE_SPEECH_INPUT = 1000;
     EditText mTextTv;
-    ImageButton mVoiceBtn, btnUser, btnFavorites, btnUpload;
+    ImageButton mVoiceBtn, btnPantry, btnUser, btnFavorites, btnUpload;
     ListView lvRecommendations;
     TextView lblTopInst;
     private Button btnLogout, btnGenerate;
@@ -54,7 +53,7 @@ public class Pantry extends AppCompatActivity {
     boolean cancelled = false;
     private TextView lblIngredients, lblFavorites, lblUser;
     boolean isLangEng = false;
-    LinearLayout linearHome;
+
     List<Dishes> recommendList = new ArrayList<>();
     AlertDialog recommendDialog;
     RecommendationsAdapter rAdapter;
@@ -74,6 +73,7 @@ public class Pantry extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Pantry.this, Favorites.class);
                 startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(Pantry.this).toBundle());
+                finish();
             }
         });
         mVoiceBtn.setOnClickListener(new View.OnClickListener() {
@@ -83,24 +83,18 @@ public class Pantry extends AppCompatActivity {
                 speak();
             }
         });
-        linearHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Pantry.this, HomeActivity.class);
-                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(Pantry.this).toBundle());
-                finish();
-            }
-        });
         btnUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Pantry.this, User.class));
+                finish();
             }
         });
         btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Pantry.this, Upload.class));
+                finish();
             }
         });
 
@@ -264,9 +258,9 @@ public class Pantry extends AppCompatActivity {
 
     private void initViews() {
         recommendList = new ArrayList<>();
+        btnPantry = findViewById(R.id.btnPantry);
         lblTopInst = findViewById(R.id.lblTopInst);
         mTextTv = findViewById(R.id.textTv);
-        linearHome = findViewById(R.id.linearHome);
         mVoiceBtn = findViewById(R.id.voiceBtn);
         btnGenerate = findViewById(R.id.btnGenerate);
         btnUser = findViewById(R.id.btnUser);

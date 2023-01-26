@@ -26,6 +26,9 @@ public class User extends AppCompatActivity {
     FirebaseAuth mAuth;
     RelativeLayout relSecurity, relPerson, relLang;
     TextView lblPersonalInfo, lblLanguage, lblSecurity;
+
+    ImageButton btnPantry, btnUser, btnFavorites, btnUpload;
+    TextView lblUser, lblFavorites;
     ProgressDialog pdLoading;
     Users nullUser;
     Boolean isLangEng = false;
@@ -46,12 +49,22 @@ public class User extends AppCompatActivity {
         lblPersonalInfo = findViewById(R.id.lblPersonalInfo);
         lblLanguage = findViewById(R.id.lblLanguage);
         lblSecurity = findViewById(R.id.lblSecurity);
+        btnPantry = findViewById(R.id.btnPantry);
+        btnUser = findViewById(R.id.btnUser);
+        btnFavorites = findViewById(R.id.btnFavorites);
+        btnUpload = findViewById(R.id.btnUpload);
+        lblUser = findViewById(R.id.lblUser);
+        lblFavorites = findViewById(R.id.lblFavorites);
+
         Boolean isEng = new LanguagePref(User.this).getIsEng();
         isLangEng = isEng;
         if (!isEng) {
             lblPersonalInfo.setText("Personal Na Inpormasyon");
             lblLanguage.setText("Wika");
             lblSecurity.setText("Seguridad");
+        } else {
+            lblUser.setText("User");
+            lblFavorites.setText("Favorites");
         }
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +129,28 @@ public class User extends AppCompatActivity {
                 onBackPressed();
             }
         }));
+
+        btnPantry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(User.this, Pantry.class));
+                finish();
+            }
+        });
+        btnFavorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(User.this, Favorites.class));
+                finish();
+            }
+        });
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(User.this, Upload.class));
+                finish();
+            }
+        });
     }
 
     private void initDialogViews(View mView) {
@@ -173,10 +208,14 @@ public class User extends AppCompatActivity {
             lblPersonalInfo.setText("Personal Na Inpormasyon");
             lblLanguage.setText("Wika");
             lblSecurity.setText("Seguridad");
+            lblUser.setText("Gumagamit");
+            lblFavorites.setText("Mga Paborito");
         } else {
             lblPersonalInfo.setText("Personal Information");
             lblLanguage.setText("Language");
             lblSecurity.setText("Security");
+            lblUser.setText("User");
+            lblFavorites.setText("Favorites");
         }
     }
 }

@@ -1,8 +1,10 @@
 package com.expert.fire;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,6 +27,8 @@ public class Favorites extends AppCompatActivity {
     List<Dishes> dishList;
     TextView txtNoFavorites;
     Boolean isLangEng = false;
+    ImageButton btnPantry, btnUser, btnFavorites, btnUpload;
+    TextView lblUser, lblFavorites;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,27 @@ public class Favorites extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        btnUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Favorites.this, User.class));
+                finish();
+            }
+        });
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Favorites.this, Upload.class));
+                finish();
+            }
+        });
+        btnPantry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Favorites.this, Pantry.class));
+                finish();
+            }
+        });
     }
 
     private void initViews() {
@@ -55,10 +80,18 @@ public class Favorites extends AppCompatActivity {
         toolbar = findViewById(R.id.mToolbar);
         txtNoFavorites = findViewById(R.id.txtNoFavorites);
         txtNoFavorites.setVisibility(View.GONE);
+        btnPantry = findViewById(R.id.btnPantry);
+        btnUser = findViewById(R.id.btnUser);
+        btnFavorites = findViewById(R.id.btnFavorites);
+        btnUpload = findViewById(R.id.btnUpload);
+        lblUser = findViewById(R.id.lblUser);
+        lblFavorites = findViewById(R.id.lblFavorites);
         isLangEng = new LanguagePref(Favorites.this).getIsEng();
         if (isLangEng) {
             txtNoFavorites.setText("There are no list of favorites");
             toolbar.setTitle("Favorites");
+            lblUser.setText("User");
+            lblFavorites.setText("Favorites");
         }
         loadData();
 

@@ -51,6 +51,8 @@ public class Upload extends AppCompatActivity {
     LocalStorage storage;
     Boolean isLangEng = false;
     TextView lblPicture;
+    ImageButton btnPantry, btnUser, btnFavorites, btnUpload;
+    TextView lblUser, lblFavorites;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +64,25 @@ public class Upload extends AppCompatActivity {
     }
 
     private void initListeners() {
-        toolbar.setOnClickListener(new View.OnClickListener() {
+        btnPantry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                startActivity(new Intent(Upload.this, Pantry.class));
+                finish();
+            }
+        });
+        btnUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Upload.this, User.class));
+                finish();
+            }
+        });
+        btnFavorites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Upload.this, Favorites.class));
+                finish();
             }
         });
         btnBrowse.setOnClickListener(new View.OnClickListener() {
@@ -209,6 +226,12 @@ public class Upload extends AppCompatActivity {
         loadingImageDialog = new ProgressDialog(Upload.this);
         lblPicture = findViewById(R.id.lblPicture);
         btnOnUpload = findViewById(R.id.btnOnUpload);
+        btnPantry = findViewById(R.id.btnPantry);
+        btnUser = findViewById(R.id.btnUser);
+        btnFavorites = findViewById(R.id.btnFavorites);
+        btnUpload = findViewById(R.id.btnUpload);
+        lblUser = findViewById(R.id.lblUser);
+        lblFavorites = findViewById(R.id.lblFavorites);
         isLangEng = new LanguagePref(Upload.this).getIsEng();
         if (isLangEng) {
             loadingImageDialog.setMessage("Loading Image ...");
@@ -219,6 +242,8 @@ public class Upload extends AppCompatActivity {
             editIngredients.setHint("Ingredients");
             editInstructions.setHint("Instructions");
             btnOnUpload.setText("Upload");
+            lblUser.setText("User");
+            lblFavorites.setText("Favorites");
         } else {
             loadingImageDialog.setMessage("Nilo-load ang Imahe...");
         }

@@ -9,7 +9,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FDFDF7"/>
+        android:background="#FDFDF7" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -72,6 +72,10 @@
                 android:ems="10"
                 android:hint="Password"
                 android:inputType="textPassword"
+                android:lines="1"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:minLines="1"
                 android:paddingLeft="20dp"
                 android:paddingTop="13dp"
                 android:paddingRight="20dp"
@@ -93,6 +97,10 @@
                 android:ems="10"
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
+                android:lines="1"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:minLines="1"
                 android:paddingLeft="20dp"
                 android:paddingTop="13dp"
                 android:paddingRight="20dp"
