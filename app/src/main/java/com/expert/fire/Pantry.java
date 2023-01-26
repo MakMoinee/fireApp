@@ -225,9 +225,9 @@ public class Pantry extends AppCompatActivity {
 
         Boolean isEng = new LanguagePref(Pantry.this).getIsEng();
         if (isEng) {
-            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "How are you? Please state your ingredients");
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"How are you? Please state your ingredients");
         } else {
-            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Kumusta? Sabihin ang iyong mga sangkap");
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Kumusta? Sabihin ang iyong mga sangkap");
         }
 
 

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "718941507700",
+    "firebase_url": "https://fire-2ee4d-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "fire-2ee4d",
     "storage_bucket": "fire-2ee4d.appspot.com"
   },
@@ -13,6 +14,22 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "718941507700-2s7eg4uhge348r6t0h22qja6b4srajkd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.expert.fire",
+            "certificate_hash": "0dd4a7bb7541f9a586cb1e370294daf46f90f4a6"
+          }
+        },
+        {
+          "client_id": "718941507700-7n1euh1fppc09couiomhgkj74vml4373.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.expert.fire",
+            "certificate_hash": "3bd44505f8072b6374cf47049df5d12aed6f2df4"
+          }
+        },
         {
           "client_id": "718941507700-pgdn6m2scj1bj9vhorlnuno0udkumlt5.apps.googleusercontent.com",
           "client_type": 3

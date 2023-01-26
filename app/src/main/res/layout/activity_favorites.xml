@@ -38,8 +38,6 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/mToolbar"
             android:padding="10dp" />
-
-
     </RelativeLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
