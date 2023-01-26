@@ -35,6 +35,10 @@
             android:name="com.expert.fire.Security"
             android:exported="false" />
         <activity
+            android:name=".HomeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.expert.fire.Language"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.NoActionBar" />

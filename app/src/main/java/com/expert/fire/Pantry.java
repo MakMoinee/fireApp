@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ public class Pantry extends AppCompatActivity {
     boolean cancelled = false;
     private TextView lblIngredients, lblFavorites, lblUser;
     boolean isLangEng = false;
+    LinearLayout linearHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +72,14 @@ public class Pantry extends AppCompatActivity {
                 speak();
             }
         });
-
+        linearHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Pantry.this, HomeActivity.class);
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(Pantry.this).toBundle());
+                finish();
+            }
+        });
         btnUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,6 +199,7 @@ public class Pantry extends AppCompatActivity {
 
     private void initViews() {
         mTextTv = findViewById(R.id.textTv);
+        linearHome = findViewById(R.id.linearHome);
         mVoiceBtn = findViewById(R.id.voiceBtn);
         btnGenerate = findViewById(R.id.btnGenerate);
         btnUser = findViewById(R.id.btnUser);
@@ -225,9 +235,9 @@ public class Pantry extends AppCompatActivity {
 
         Boolean isEng = new LanguagePref(Pantry.this).getIsEng();
         if (isEng) {
-            intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"How are you? Please state your ingredients");
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "How are you? Please state your ingredients");
         } else {
-            intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Kumusta? Sabihin ang iyong mga sangkap");
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Kumusta? Sabihin ang iyong mga sangkap");
         }
 
 

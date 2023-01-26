@@ -17,7 +17,8 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:visibility="invisible">
 
             <TextView
                 android:id="@+id/lblIngredients"
@@ -57,26 +58,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Instruction: Put comma after the word and small letter only. Example:pork,potato"
-                android:textColor="@color/black"></TextView>
-
-            <EditText
-                android:id="@+id/textTv"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/input_bg"
-                android:ems="8"
-                android:gravity="start"
-                android:hint="I-type ang iyong mga sangkap"
-                android:inputType="textMultiLine"
-                android:paddingLeft="10dp"
-                android:paddingTop="10dp" />
+                android:src="@drawable/fire" />
         </RelativeLayout>
     </LinearLayout>
 
@@ -95,7 +80,8 @@
             android:clickable="true"
             android:text="bumuo"
             android:textColor="@color/black"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <LinearLayout
@@ -131,11 +117,13 @@
                 android:text="Home"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearPantry"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -147,7 +135,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:background="@android:color/white"
+                android:background="@null"
                 android:scaleType="fitCenter"
                 android:src="@drawable/home" />
 
@@ -157,7 +145,6 @@
                 android:layout_height="0dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:textStyle="bold"
                 android:text="Pantry"
                 android:textAlignment="center"
                 android:textColor="@color/black"
@@ -166,6 +153,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearUpload"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -195,6 +183,7 @@
 
 
         <LinearLayout
+            android:id="@+id/linearFavorites"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
