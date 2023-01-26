@@ -113,7 +113,7 @@ public class User extends AppCompatActivity {
         btnBck.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(User.this, Pantry.class));
+                onBackPressed();
             }
         }));
     }
@@ -173,7 +173,7 @@ public class User extends AppCompatActivity {
             lblPersonalInfo.setText("Personal Na Inpormasyon");
             lblLanguage.setText("Wika");
             lblSecurity.setText("Seguridad");
-        }else{
+        } else {
             lblPersonalInfo.setText("Personal Information");
             lblLanguage.setText("Language");
             lblSecurity.setText("Security");

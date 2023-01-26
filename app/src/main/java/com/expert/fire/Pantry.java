@@ -5,11 +5,14 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.expert.fire.Adapters.RecommendationsAdapter;
 import com.expert.fire.Interfaces.LocalFirestoreCallback;
 import com.expert.fire.LocalPreference.LanguagePref;
 import com.expert.fire.LocalPreference.UserPreferences;
@@ -27,9 +31,11 @@ import com.expert.fire.Service.LocalFireStore;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 public class Pantry extends AppCompatActivity {
@@ -37,6 +43,8 @@ public class Pantry extends AppCompatActivity {
     private static final int REQUEST_CODE_SPEECH_INPUT = 1000;
     EditText mTextTv;
     ImageButton mVoiceBtn, btnUser, btnFavorites, btnUpload;
+    ListView lvRecommendations;
+    TextView lblTopInst;
     private Button btnLogout, btnGenerate;
     private RelativeLayout relGenerate;
     private AlertDialog linearUserDialog;
@@ -47,6 +55,9 @@ public class Pantry extends AppCompatActivity {
     private TextView lblIngredients, lblFavorites, lblUser;
     boolean isLangEng = false;
     LinearLayout linearHome;
+    List<Dishes> recommendList = new ArrayList<>();
+    AlertDialog recommendDialog;
+    RecommendationsAdapter rAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,53 +124,69 @@ public class Pantry extends AppCompatActivity {
                         @Override
                         public void onSuccess(List<Dishes> dishList) {
                             Dishes filterDish = new Dishes();
+                            List<Dishes> filterDishList = new ArrayList<>();
+                            Map<String, Boolean> availMap = new HashMap<>();
                             int validCount = 0;
+                            int resultCountNeeded = 2;
+                            int cycles = 2;
                             if (dishList != null) {
-                                for (Dishes d : dishList) {
-                                    validCount = new Integer(0);
-                                    Set<String> newSet = new HashSet<>(d.getIngredients());
-                                    for (int j = 0; j < newSet.toArray().length; j++) {
-                                        String str = newSet.toArray()[j].toString();
-                                        for (int i = 0; i < searchArr.length; i++) {
-                                            String str2 = searchArr[i].toString();
-                                            if (str2.equals(str)) {
-                                                validCount++;
+                                while (resultCountNeeded != 0) {
+                                    filterDish = null;
+                                    for (Dishes d : dishList) {
+                                        validCount = new Integer(0);
+                                        Set<String> newSet = new HashSet<>(d.getIngredients());
+                                        for (int j = 0; j < newSet.toArray().length; j++) {
+                                            String str = newSet.toArray()[j].toString();
+                                            for (int i = 0; i < searchArr.length; i++) {
+                                                String str2 = searchArr[i].toString();
+                                                if (str2.equals(str)) {
+                                                    validCount++;
+                                                }
+                                                if (Integer.toString(validCount).equals(Integer.toString(searchArr.length))) {
+                                                    break;
+                                                }
+
                                             }
                                             if (Integer.toString(validCount).equals(Integer.toString(searchArr.length))) {
                                                 break;
                                             }
-
                                         }
+
                                         if (Integer.toString(validCount).equals(Integer.toString(searchArr.length))) {
+                                            if (!availMap.containsKey(d.getDish())) {
+                                                filterDish = d;
+                                                filterDishList.add(d);
+
+                                                availMap.put(filterDish.getDish(), true);
+                                            }
+                                            resultCountNeeded--;
                                             break;
                                         }
                                     }
+                                    cycles--;
 
-                                    if (Integer.toString(validCount).equals(Integer.toString(searchArr.length))) {
-                                        filterDish = d;
-                                        break;
+                                    if (cycles == 0 && filterDish == null) {
+                                        resultCountNeeded = 0;
+                                    } else {
+                                        dishList.remove(filterDish);
                                     }
+
                                 }
 
                             }
                             pdLoading.hide();
                             if (validCount == searchArr.length) {
-                                Intent intent = new Intent(Pantry.this, DishActivity.class);
-                                intent.putExtra("dishRaw", new Gson().toJson(filterDish));
-                                intent.putExtra("title", filterDish.getDish());
-                                intent.putExtra("videoURL", filterDish.getVideoURL());
-                                intent.putExtra("instructions", String.join("\n", filterDish.getInstructions()));
-                                intent.putExtra("ingredients", String.join("\n", filterDish.getOrigIngredients()));
-                                if (filterDish.getDescription().size() > 0) {
-                                    intent.putExtra("description", String.join("\n", filterDish.getDescription()));
-                                } else {
-                                    intent.putExtra("description", "");
-                                }
+                                recommendList = filterDishList;
+                                AlertDialog.Builder mBuilder = new AlertDialog.Builder(Pantry.this);
+                                View mView = getLayoutInflater().inflate(R.layout.dialog_show_option, null, false);
+                                initRecommendDiagViews(mView);
+                                initRecommenDiagListener();
+                                mBuilder.setView(mView);
+                                recommendDialog = mBuilder.create();
+                                recommendDialog.show();
 
-
-                                startActivity(intent);
-                                mTextTv.setText("");
                             } else {
+                                Log.e("SEARCHLIST", Integer.toString(filterDishList.size()));
                                 if (isLangEng) {
                                     Toast.makeText(Pantry.this, "Ingredient not found", Toast.LENGTH_SHORT).show();
                                 } else {
@@ -192,12 +219,52 @@ public class Pantry extends AppCompatActivity {
         });
     }
 
+    private void initRecommenDiagListener() {
+        lvRecommendations.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Dishes filterDish = recommendList.get(position);
+
+                Intent intent = new Intent(Pantry.this, DishActivity.class);
+                intent.putExtra("dishRaw", new Gson().toJson(filterDish));
+                intent.putExtra("title", filterDish.getDish());
+                intent.putExtra("videoURL", filterDish.getVideoURL());
+                intent.putExtra("instructions", String.join("\n", filterDish.getInstructions()));
+                intent.putExtra("ingredients", String.join("\n", filterDish.getOrigIngredients()));
+                if (filterDish.getDescription().size() > 0) {
+                    intent.putExtra("description", String.join("\n", filterDish.getDescription()));
+                } else {
+                    intent.putExtra("description", "");
+                }
+
+
+                startActivity(intent);
+                mTextTv.setText("");
+                recommendDialog.dismiss();
+            }
+        });
+    }
+
+    private void initRecommendDiagViews(View mView) {
+        lvRecommendations = mView.findViewById(R.id.lvRecommendations);
+        TextView txtRec = mView.findViewById(R.id.txtRec);
+        if (isLangEng) {
+            txtRec.setText("Recommendation Results");
+        } else {
+            txtRec.setText("Resulta ng Rekomendasyon");
+        }
+        rAdapter = new RecommendationsAdapter(Pantry.this, recommendList);
+        lvRecommendations.setAdapter(rAdapter);
+    }
+
 
     private void initDialogView(View mView) {
         btnLogout = mView.findViewById(R.id.btnLogout);
     }
 
     private void initViews() {
+        recommendList = new ArrayList<>();
+        lblTopInst = findViewById(R.id.lblTopInst);
         mTextTv = findViewById(R.id.textTv);
         linearHome = findViewById(R.id.linearHome);
         mVoiceBtn = findViewById(R.id.voiceBtn);
@@ -224,6 +291,7 @@ public class Pantry extends AppCompatActivity {
             pdLoading.setMessage("Sending Request ...");
         } else {
             pdLoading.setMessage("Nagpapadala ng Kahilingan ...");
+            lblTopInst.setText("Panuto: Lagyan ng kuwit pagkatapos ng salita at maliit na titik lamang. Halimbawa: baboy, patatas");
         }
     }
 
@@ -269,6 +337,17 @@ public class Pantry extends AppCompatActivity {
         Users users = new UserPreferences(Pantry.this).getUsers();
         if (users == null) {
             finish();
+        }
+
+        isLangEng = new LanguagePref(Pantry.this).getIsEng();
+        if (isLangEng) {
+            lblUser.setText("User");
+            lblFavorites.setText("Favorites");
+            lblTopInst.setText("Instruction: Put comma after the word and small letter only. Example:pork,potato");
+        } else {
+            lblUser.setText("Gumagamit");
+            lblFavorites.setText("Mga Paborito");
+            lblTopInst.setText("Panuto: Lagyan ng kuwit pagkatapos ng salita at maliit na titik lamang. Halimbawa: baboy, patatas");
         }
     }
 }
