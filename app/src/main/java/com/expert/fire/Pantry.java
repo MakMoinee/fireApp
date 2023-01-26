@@ -159,6 +159,10 @@ public class Pantry extends AppCompatActivity {
                                     }
                                     cycles--;
 
+                                    if (resultCountNeeded == 2) {
+                                        resultCountNeeded = 0;
+                                    }
+
                                     if (cycles == 0 && filterDish == null) {
                                         resultCountNeeded = 0;
                                     } else {
@@ -193,6 +197,13 @@ public class Pantry extends AppCompatActivity {
 
                         @Override
                         public void onError(Exception e) {
+                            pdLoading.dismiss();
+                            if (isLangEng) {
+                                Toast.makeText(Pantry.this, "Ingredient not found", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(Pantry.this, "Hindi Natagpuan ang sangkap", Toast.LENGTH_SHORT).show();
+                            }
+
                             e.printStackTrace();
                         }
                     });

@@ -73,6 +73,7 @@ public class LocalFireStore {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
+                            e.printStackTrace();
                             callback.onError(e);
                         }
                     });
